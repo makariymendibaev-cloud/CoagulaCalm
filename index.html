@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CoagulaCalm / Гемостаз Эксперт</title>
+    <title>CoagulaCalm / СППВР</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -18,16 +18,16 @@
             box-shadow: 0 10px 40px -10px rgba(30, 58, 138, 0.08);
         }
         .glass-input {
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.9);
             border: 1px solid rgba(186, 230, 253, 0.8);
             box-shadow: inset 0 2px 4px rgba(30, 58, 138, 0.02);
             transition: all 0.2s ease;
         }
         .glass-input:focus {
             background: rgba(255, 255, 255, 1);
-            border-color: rgba(14, 165, 233, 0.6);
+            border-color: rgba(14, 165, 233, 0.8);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
         }
 
         .ios-select {
@@ -49,69 +49,66 @@
             box-shadow: 0 2px 10px rgba(30, 58, 138, 0.1);
             font-weight: 600;
         }
+        
         .checkbox-row { transition: background 0.2s; }
-        .checkbox-row:hover { background: rgba(255,255,255,0.9); }
+        .checkbox-row:hover { background: rgba(255,255,255,0.95); }
         
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(186, 230, 253, 0.8); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(125, 211, 252, 1); }
-        
-        .animate-fade-in { animation: fadeIn 0.3s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-        details > summary { list-style: none; }
-        details > summary::-webkit-details-marker { display: none; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(186, 230, 253, 1); border-radius: 10px; }
     </style>
 </head>
-<body class="bg-gradient-to-br from-sky-50 via-blue-50/50 to-indigo-50 min-h-screen text-blue-950 selection:bg-sky-200 flex flex-col">
+<body class="bg-gradient-to-br from-sky-50 via-blue-50/60 to-indigo-50 min-h-screen text-blue-950 flex flex-col items-center">
 
-    <div class="max-w-7xl mx-auto p-4 md:p-6 lg:p-8 flex-grow w-full">
+    <div class="max-w-6xl w-full p-4 md:p-6 lg:p-8 flex-grow flex flex-col">
         
         <!-- Header -->
-        <header class="flex flex-col md:flex-row justify-between items-center mb-6 glass-panel rounded-3xl p-5 md:p-6 gap-4">
+        <header class="flex flex-col md:flex-row justify-between items-center mb-6 glass-panel rounded-3xl p-5 md:p-6 gap-4 w-full">
             <div class="flex items-center gap-4 w-full md:w-auto">
-                <div class="bg-gradient-to-tr from-blue-600 to-sky-400 p-3.5 rounded-2xl text-white shadow-lg shadow-blue-600/20">
+                <div class="bg-gradient-to-tr from-blue-600 to-sky-400 p-3.5 rounded-2xl text-white shadow-lg shadow-blue-600/20 shrink-0">
                     <i data-lucide="activity" class="w-6 h-6"></i>
                 </div>
-                <div>
-                    <h1 class="text-xl md:text-2xl font-bold tracking-tight text-blue-950">CoagulaCalm</h1>
-                    <p class="text-sm text-blue-800/70 font-medium" id="t-appSubtitle">Клиническая система поддержки принятия решений</p>
+                <div class="flex flex-col">
+                    <h1 class="text-xl md:text-2xl font-bold tracking-tight text-blue-950" id="t-appTitle">CoagulaCalm</h1>
+                    <p class="text-xs md:text-sm text-blue-800/70 font-medium" id="t-appSubtitle">Клиническая система поддержки принятия решений</p>
                 </div>
             </div>
 
             <!-- Language Toggle -->
-            <div class="flex items-center gap-3 font-semibold text-sm bg-white/50 p-2 rounded-full border border-sky-100">
+            <div class="flex items-center gap-3 font-semibold text-sm bg-white/60 p-2 rounded-full border border-sky-100/80 shrink-0 shadow-sm">
                 <span class="text-blue-900 transition-opacity ml-2" id="lbl-ru">RU</span>
                 <label class="relative inline-flex items-center cursor-pointer">
                     <input type="checkbox" id="langToggle" class="sr-only ios-toggle">
-                    <div class="w-11 h-6 bg-sky-200 rounded-full transition-colors duration-300 ease-in-out after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-sky-100 after:border after:rounded-full after:h-5 after:w-5 after:transition-transform after:duration-300 after:shadow-sm"></div>
+                    <div class="w-11 h-6 bg-sky-200 rounded-full transition-colors duration-300 ease-in-out after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-transform after:shadow-sm"></div>
                 </label>
                 <span class="text-blue-900/40 transition-opacity mr-2" id="lbl-en">EN</span>
             </div>
         </header>
 
         <!-- Navigation Tabs -->
-        <nav class="flex flex-wrap md:flex-nowrap p-1.5 mb-8 bg-white/40 rounded-2xl md:rounded-full backdrop-blur-md border border-sky-100/50 shadow-sm">
-            <button class="tab-btn active flex-1 px-4 py-2.5 text-sm md:text-base rounded-xl md:rounded-full text-blue-800 font-medium" data-tab="perioperative" id="t-tabPeri">Регионарная анестезия</button>
-            <button class="tab-btn flex-1 px-4 py-2.5 text-sm md:text-base rounded-xl md:rounded-full text-blue-800 font-medium" data-tab="vte" id="t-tabVTE">Риск ВТЭО (Caprini/Padua)</button>
-            <button class="tab-btn flex-1 px-4 py-2.5 text-sm md:text-base rounded-xl md:rounded-full text-blue-800 font-medium" data-tab="bleeding" id="t-tabBleeding">Кровотечения (HAS-BLED)</button>
-            <button class="tab-btn flex-1 px-4 py-2.5 text-sm md:text-base rounded-xl md:rounded-full text-blue-800 font-medium" data-tab="chads" id="t-tabChads">Шкала CHA₂DS₂-VASc</button>
+        <nav class="flex flex-col md:flex-row p-1.5 mb-6 bg-white/50 rounded-3xl md:rounded-full backdrop-blur-md border border-sky-100 shadow-sm w-full gap-1 md:gap-0">
+            <button class="tab-btn active flex-1 px-4 py-3 md:py-2.5 text-sm md:text-base rounded-2xl md:rounded-full text-blue-800 font-medium" data-tab="perioperative" id="t-tabPeri">Регионарная анестезия</button>
+            <button class="tab-btn flex-1 px-4 py-3 md:py-2.5 text-sm md:text-base rounded-2xl md:rounded-full text-blue-800 font-medium" data-tab="vte" id="t-tabVTE">Риск ВТЭО (Шкалы)</button>
+            <button class="tab-btn flex-1 px-4 py-3 md:py-2.5 text-sm md:text-base rounded-2xl md:rounded-full text-blue-800 font-medium" data-tab="bleeding" id="t-tabBleeding">HAS-BLED</button>
+            <button class="tab-btn flex-1 px-4 py-3 md:py-2.5 text-sm md:text-base rounded-2xl md:rounded-full text-blue-800 font-medium" data-tab="chads" id="t-tabChads">CHA₂DS₂-VASc</button>
         </nav>
 
         <!-- TAB 1: PERIOPERATIVE MANAGEMENT -->
-        <main id="tab-perioperative" class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 animate-fade-in">
-            <!-- Left Column: Parameters -->
-            <section class="glass-panel rounded-3xl p-6 lg:p-8 flex flex-col gap-6 lg:col-span-5">
-                <h2 class="text-lg font-bold flex items-center gap-2 text-blue-900 border-b border-sky-200/50 pb-4" id="t-inputTitle">
+        <main id="tab-perioperative" class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 w-full animate-fade-in flex-grow">
+            <!-- Parameters -->
+            <section class="glass-panel rounded-3xl p-6 lg:p-8 flex flex-col gap-5 lg:col-span-5 h-fit">
+                <h2 class="text-lg font-bold flex items-center gap-2 text-blue-900 border-b border-sky-100 pb-3" id="t-inputTitle">
                     <i data-lucide="sliders-horizontal" class="w-5 h-5 text-sky-500"></i> Клинические параметры
                 </h2>
 
                 <div class="flex flex-col gap-1.5">
                     <label class="text-xs font-bold text-blue-900/60 uppercase tracking-wider ml-1" id="t-lblBlockade">Вид регионарной анестезии</label>
                     <select id="selBlockade" class="ios-select glass-input text-blue-950 rounded-2xl p-3.5 font-medium cursor-pointer">
-                        <option value="deep" id="t-optDeep">Глубокая (нейроаксиальная, глубокая фасциальная)</option>
-                        <option value="superficial" id="t-optSuper">Поверхностная (поверхностная фасциальная, подкожная)</option>
+                        <option value="deep" id="t-optDeep">Глубокая блокада</option>
+                        <option value="superficial" id="t-optSuper">Поверхностная блокада</option>
                     </select>
                 </div>
 
@@ -126,36 +123,11 @@
                 </div>
 
                 <div class="flex flex-col gap-1.5">
-                    <label class="text-xs font-bold text-blue-900/60 uppercase tracking-wider ml-1" id="t-lblDrug">Конкретный препарат</label>
+                    <label class="text-xs font-bold text-blue-900/60 uppercase tracking-wider ml-1" id="t-lblDrug">Фармакологический препарат</label>
                     <select id="selDrug" class="ios-select glass-input text-blue-950 rounded-2xl p-3.5 font-medium cursor-pointer"></select>
                 </div>
 
-                <!-- Modifiers -->
-                <div class="space-y-4 pt-2 border-t border-sky-100">
-                    <div class="hidden items-center justify-between bg-white/50 border border-sky-100/50 p-4 rounded-2xl" id="wrapAggregation">
-                        <div class="flex flex-col pr-4">
-                            <span class="text-sm font-semibold text-blue-950" id="t-lblAggrTitle">Агрегатограмма тромбоцитов</span>
-                            <span class="text-xs text-blue-800/60 mt-0.5" id="t-lblAggrDesc">Инструментально подтвержденная нормоагрегация</span>
-                        </div>
-                        <label class="relative inline-flex items-center cursor-pointer shrink-0">
-                            <input type="checkbox" id="chkAggregation" class="sr-only ios-toggle">
-                            <div class="w-12 h-7 bg-sky-200 rounded-full transition-colors duration-300 ease-in-out after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-sky-100 after:border after:rounded-full after:h-6 after:w-6 after:transition-transform after:duration-300 after:shadow-sm"></div>
-                        </label>
-                    </div>
-
-                    <div class="flex items-center justify-between bg-white/50 border border-sky-100/50 p-4 rounded-2xl" id="wrapBmi">
-                        <div class="flex flex-col pr-4">
-                            <span class="text-sm font-semibold text-blue-950" id="t-lblBmiTitle">Экстремальное ожирение</span>
-                            <span class="text-xs text-blue-800/60 mt-0.5" id="t-lblBmiDesc">ИМТ > 40 кг/м² или вес > 150 кг</span>
-                        </div>
-                        <label class="relative inline-flex items-center cursor-pointer shrink-0">
-                            <input type="checkbox" id="chkBmi" class="sr-only ios-toggle">
-                            <div class="w-12 h-7 bg-sky-200 rounded-full transition-colors duration-300 ease-in-out after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-sky-100 after:border after:rounded-full after:h-6 after:w-6 after:transition-transform after:duration-300 after:shadow-sm"></div>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="flex flex-col gap-1.5 transition-opacity duration-300" id="wrapDose">
+                <div class="flex flex-col gap-1.5 transition-all duration-300" id="wrapDose">
                     <label class="text-xs font-bold text-blue-900/60 uppercase tracking-wider ml-1" id="t-lblDose">Режим дозирования</label>
                     <select id="selDose" class="ios-select glass-input text-blue-950 rounded-2xl p-3.5 font-medium cursor-pointer">
                         <option value="low" id="t-optLow">Профилактическая доза</option>
@@ -163,7 +135,7 @@
                     </select>
                 </div>
 
-                <div class="flex flex-col gap-1.5 transition-opacity duration-300" id="wrapGfr">
+                <div class="flex flex-col gap-1.5 transition-all duration-300" id="wrapGfr">
                     <label class="text-xs font-bold text-blue-900/60 uppercase tracking-wider ml-1" id="t-lblGfr">Функция почек (СКФ мл/мин)</label>
                     <select id="selGfr" class="ios-select glass-input text-blue-950 rounded-2xl p-3.5 font-medium cursor-pointer">
                         <option value="normal" id="t-optGfrNormal">Нормальная (≥ 80)</option>
@@ -172,30 +144,65 @@
                         <option value="severe" id="t-optGfrSev">Тяжелая почечная дисфункция (< 30)</option>
                     </select>
                 </div>
+
+                <!-- Toggles -->
+                <div class="space-y-3 pt-2 border-t border-sky-100">
+                    <div class="hidden items-center justify-between bg-white/60 border border-sky-100 p-4 rounded-2xl" id="wrapAggregation">
+                        <div class="flex flex-col pr-4">
+                            <span class="text-sm font-semibold text-blue-950" id="t-lblAggrTitle">Агрегатограмма тромбоцитов</span>
+                            <span class="text-xs text-blue-800/60 mt-0.5" id="t-lblAggrDesc">Инструментально подтвержденная нормоагрегация</span>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer shrink-0">
+                            <input type="checkbox" id="chkAggregation" class="sr-only ios-toggle">
+                            <div class="w-12 h-7 bg-sky-200 rounded-full after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-transform"></div>
+                        </label>
+                    </div>
+
+                    <div class="hidden items-center justify-between bg-white/60 border border-sky-100 p-4 rounded-2xl" id="wrapTrauma">
+                        <div class="flex flex-col pr-4">
+                            <span class="text-sm font-semibold text-blue-950" id="t-lblTraumaTitle">Травматичная пункция</span>
+                            <span class="text-xs text-blue-800/60 mt-0.5" id="t-lblTraumaDesc">Примесь крови при выполнении манипуляции</span>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer shrink-0">
+                            <input type="checkbox" id="chkTrauma" class="sr-only ios-toggle">
+                            <div class="w-12 h-7 bg-sky-200 rounded-full after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-transform"></div>
+                        </label>
+                    </div>
+
+                    <div class="flex items-center justify-between bg-white/60 border border-sky-100 p-4 rounded-2xl" id="wrapBmi">
+                        <div class="flex flex-col pr-4">
+                            <span class="text-sm font-semibold text-blue-950" id="t-lblBmiTitle">Экстремальное ожирение</span>
+                            <span class="text-xs text-blue-800/60 mt-0.5" id="t-lblBmiDesc">ИМТ > 40 кг/м² или вес > 150 кг</span>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer shrink-0">
+                            <input type="checkbox" id="chkBmi" class="sr-only ios-toggle">
+                            <div class="w-12 h-7 bg-sky-200 rounded-full after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-transform"></div>
+                        </label>
+                    </div>
+                </div>
             </section>
 
-            <!-- Right Column: Outputs -->
-            <section class="flex flex-col gap-6 lg:col-span-7 h-full">
-                
-                <!-- Main Recommendation -->
-                <div class="glass-panel rounded-3xl p-6 lg:p-8 relative overflow-hidden flex-grow flex flex-col">
-                    <div class="absolute -right-12 -top-12 w-48 h-48 bg-sky-300/20 rounded-full blur-3xl pointer-events-none"></div>
-                    <div class="absolute -left-12 -bottom-12 w-48 h-48 bg-indigo-300/10 rounded-full blur-3xl pointer-events-none"></div>
+            <!-- Outputs -->
+            <section class="flex flex-col gap-6 lg:col-span-7 h-full w-full">
+                <!-- Timeline Card -->
+                <div class="glass-panel rounded-3xl p-6 lg:p-8 relative overflow-hidden flex-grow">
+                    <div class="absolute -right-20 -top-20 w-64 h-64 bg-sky-300/10 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-indigo-300/10 rounded-full blur-3xl pointer-events-none"></div>
                     
-                    <h2 class="text-lg font-bold flex items-center gap-2 mb-5 text-blue-900 z-10" id="t-resTitle">
+                    <h2 class="text-lg font-bold flex items-center gap-2 mb-6 text-blue-900 z-10 relative" id="t-resTitle">
                         <i data-lucide="git-merge" class="w-5 h-5 text-indigo-500"></i> Алгоритм периоперационного ведения
                     </h2>
                     
                     <!-- CROSS-TALK WARNINGS -->
-                    <div id="globalWarningContainer" class="flex flex-col gap-3 mb-6 z-10">
-                        <div id="warnVteBleed" class="hidden bg-rose-50/90 border border-rose-200 p-4 rounded-2xl flex gap-3 items-start">
+                    <div id="globalWarningContainer" class="flex flex-col gap-3 mb-6 z-10 relative">
+                        <div id="warnVteBleed" class="hidden bg-rose-50 border border-rose-200 p-4 rounded-2xl flex gap-3 items-start">
                             <i data-lucide="alert-octagon" class="w-5 h-5 text-rose-600 shrink-0 mt-0.5"></i>
                             <div>
                                 <p class="text-sm font-bold text-rose-900" id="t-warnVteTitle">Конфликт рисков (ВТЭО и Кровотечение)</p>
-                                <p class="text-xs text-rose-800 mt-1" id="t-warnVteDesc">Высокий риск ВТЭО на фоне высокого риска геморрагических осложнений (HAS-BLED ≥ 3). Фармакопрофилактика противопоказана. Рекомендовано использование исключительно механических методов (перемежающаяся пневмокомпрессия).</p>
+                                <p class="text-xs text-rose-800 mt-1" id="t-warnVteDesc">Высокий риск ВТЭО на фоне высокого риска кровотечений (HAS-BLED ≥ 3). Фармакопрофилактика противопоказана. Показана аппаратная перемежающаяся пневмокомпрессия.</p>
                             </div>
                         </div>
-                        <div id="warnBridge" class="hidden bg-amber-50/90 border border-amber-200 p-4 rounded-2xl flex gap-3 items-start">
+                        <div id="warnBridge" class="hidden bg-amber-50 border border-amber-200 p-4 rounded-2xl flex gap-3 items-start">
                             <i data-lucide="git-pull-request" class="w-5 h-5 text-amber-600 shrink-0 mt-0.5"></i>
                             <div>
                                 <p class="text-sm font-bold text-amber-900" id="t-warnBridgeTitle">Показана переходная (мост) терапия</p>
@@ -204,64 +211,67 @@
                         </div>
                     </div>
 
-                    <!-- VISUAL TIMELINE -->
-                    <div class="relative border-l-2 border-sky-200/60 ml-4 md:ml-6 mt-2 space-y-7 z-10" id="visualTimeline">
+                    <div class="relative border-l-2 border-sky-200 ml-4 md:ml-6 space-y-7 z-10" id="visualTimeline">
                         <!-- Injected via JS -->
                     </div>
 
-                    <!-- Subtle TEG Warning -->
-                    <details id="tegWarning" class="mt-8 z-10 group cursor-pointer hidden">
-                        <summary class="flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors focus:outline-none">
-                            <i data-lucide="info" class="w-4 h-4"></i>
-                            <span id="t-tegToggle">Клиническое примечание (ТЭГ / РОТЭМ)</span>
-                        </summary>
-                        <div class="mt-3 p-4 bg-white/60 border border-sky-100 rounded-xl text-xs font-medium text-blue-900/80 leading-relaxed" id="t-tegWarnTxt">
-                            Использование инструментальных методов (ТЭГ/РОТЭМ) для оценки остаточной активности ПОАК перед выполнением регионарной анестезии нецелесообразно. Стандартные активаторы маскируют эффект малых доз препарата, создавая иллюзию нормокоагуляции при сохраняющемся риске формирования гематомы. Основным критерием безопасности служит фармакокинетический временной интервал.
+                    <!-- Clinical Notes Accordions -->
+                    <div id="clinicalNotesContainer" class="mt-8 flex flex-col gap-3 z-10 relative">
+                        <!-- DOAC Notes Accordion -->
+                        <div id="accDoac" class="bg-indigo-50/50 border border-indigo-100 rounded-2xl overflow-hidden hidden transition-all">
+                            <button class="w-full text-left p-4 flex items-center justify-between focus:outline-none hover:bg-indigo-100/30 transition-colors" onclick="window.toggleAccordion('contentDoac', 'iconDoac')">
+                                <span class="text-sm font-bold text-indigo-700 uppercase tracking-wider" id="t-doacNoteTitle">Клинические примечания (ПОАК)</span>
+                                <i data-lucide="chevron-down" id="iconDoac" class="w-5 h-5 text-indigo-500 transition-transform duration-300"></i>
+                            </button>
+                            <div id="contentDoac" class="hidden p-4 pt-0 text-xs font-medium text-indigo-900/90 flex flex-col gap-2 border-t border-indigo-100/50 mt-1">
+                                <p id="t-doacNote1">• Остаточная концентрация ПОАК в плазме < 30 нг/мл или анти-Ха активность ≤ 0.1 МЕ/мл считается приемлемой для выполнения глубокой блокады.</p>
+                                <p id="t-doacNote2">• Использование специфических антидотов или КПК для обеспечения возможности выполнения блокады у рутинных пациентов строго не рекомендуется.</p>
+                                <p class="text-rose-700 font-bold" id="t-tegWarnTxt">• Использование тромбоэластографии (ТЭГ/РОТЭМ) для оценки остаточного эффекта ПОАК недопустимо ввиду высокого риска получения ложнонормальных результатов.</p>
+                            </div>
                         </div>
-                    </details>
-                </div>
 
-                <!-- Emergency Reversal Card -->
-                <div class="glass-panel rounded-3xl p-6 md:p-8 relative">
-                    <h2 class="text-lg font-bold flex items-center gap-2 mb-2 text-blue-900" id="t-revTitle">
-                        <i data-lucide="zap" class="w-5 h-5 text-rose-500"></i> Протокол экстренной реверсии
-                    </h2>
-                    <p class="text-xs font-semibold text-blue-800/60 uppercase tracking-wide mb-3" id="t-revSubtitle">
-                        При развитии жизнеугрожающего кровотечения:
-                    </p>
-                    <div class="bg-rose-50/50 rounded-2xl p-4 border border-rose-100/50">
-                        <p id="txtReversal" class="text-sm md:text-base font-semibold text-rose-800 leading-relaxed transition-all">-</p>
+                        <!-- Emergency Reversal Accordion -->
+                        <div class="bg-rose-50/50 border border-rose-100 rounded-2xl overflow-hidden transition-all">
+                            <button class="w-full text-left p-4 flex items-center justify-between focus:outline-none hover:bg-rose-100/30 transition-colors" onclick="window.toggleAccordion('contentReversal', 'iconReversal')">
+                                <span class="text-sm font-bold text-rose-700 uppercase tracking-wider flex items-center gap-2" id="t-revTitle">
+                                    <i data-lucide="zap" class="w-4 h-4"></i> Протокол экстренной реверсии
+                                </span>
+                                <i data-lucide="chevron-down" id="iconReversal" class="w-5 h-5 text-rose-500 transition-transform duration-300"></i>
+                            </button>
+                            <div id="contentReversal" class="hidden p-4 pt-0 border-t border-rose-100/50 mt-1">
+                                <p class="text-[11px] font-bold text-rose-800/60 uppercase mb-2 mt-2" id="t-revSubtitle">При жизнеугрожающем кровотечении:</p>
+                                <div class="bg-white/80 rounded-xl p-3 border border-rose-100/50">
+                                    <p id="txtReversal" class="text-sm font-semibold text-rose-900 leading-relaxed">-</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
         </main>
 
-        <!-- TAB 2: VTE RISK (CAPRINI/PADUA) -->
-        <main id="tab-vte" class="hidden grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 animate-fade-in">
+        <!-- TAB 2: VTE RISK (Caprini/Padua) -->
+        <main id="tab-vte" class="hidden grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 w-full animate-fade-in flex-grow">
             <section class="glass-panel rounded-3xl p-6 lg:p-8 flex flex-col gap-4 lg:col-span-8 overflow-y-auto max-h-[70vh]">
-                
-                <div class="flex items-center justify-between border-b border-sky-200/50 pb-3 mb-2">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-sky-100 pb-4 gap-3">
                     <h2 class="text-lg font-bold text-blue-900 flex items-center gap-2" id="t-vteTitle">
                         <i data-lucide="list-checks" class="w-5 h-5 text-sky-500"></i> Оценка риска ВТЭО
                     </h2>
-                    <div class="flex bg-sky-100/50 rounded-lg p-1">
-                        <button class="px-3 py-1.5 text-xs font-semibold rounded-md bg-white text-sky-700 shadow-sm transition-all" id="btnCaprini">Caprini (Хирургия)</button>
-                        <button class="px-3 py-1.5 text-xs font-medium rounded-md text-sky-600/70 hover:text-sky-700 transition-all" id="btnPadua">Padua (Терапия)</button>
+                    <div class="flex bg-sky-100/50 rounded-xl p-1 w-full sm:w-auto">
+                        <button class="flex-1 px-3 py-1.5 text-xs font-semibold rounded-lg bg-white text-sky-700 shadow-sm transition-all" id="btnCaprini">Caprini (Хирургия)</button>
+                        <button class="flex-1 px-3 py-1.5 text-xs font-medium rounded-lg text-sky-600/70 hover:text-sky-700 transition-all" id="btnPadua">Padua (Терапия)</button>
                     </div>
                 </div>
-
-                <div id="capriniForm" class="flex flex-col gap-4 transition-opacity duration-300"></div>
-                <div id="paduaForm" class="hidden flex-col gap-2 transition-opacity duration-300"></div>
+                <div id="capriniForm" class="flex flex-col gap-4"></div>
+                <div id="paduaForm" class="hidden flex-col gap-2"></div>
             </section>
-
             <section class="lg:col-span-4">
                 <div class="glass-panel rounded-3xl p-6 lg:p-8 sticky top-6">
-                    <h2 class="text-sm font-bold text-blue-900/60 uppercase tracking-wider mb-2" id="t-scoreTitleVTE">Сумма баллов</h2>
+                    <h2 class="text-xs font-bold text-blue-900/60 uppercase tracking-wider mb-2" id="t-scoreTitleVTE">Сумма баллов</h2>
                     <div class="flex items-end gap-2 mb-6">
                         <span id="vteScoreVal" class="text-5xl font-bold text-sky-600 leading-none">0</span>
                     </div>
-                    
-                    <div class="bg-white/80 rounded-2xl p-5 border shadow-sm" id="vteResultBox">
+                    <div class="bg-white/80 rounded-2xl p-5 border shadow-sm">
                         <span class="text-xs font-bold uppercase tracking-wider text-blue-900/50 block mb-2" id="t-vteResLabel">Клиническая стратегия</span>
                         <p id="vteResultText" class="text-sm font-semibold leading-relaxed text-blue-900">-</p>
                     </div>
@@ -270,20 +280,20 @@
         </main>
 
         <!-- TAB 3: HAS-BLED -->
-        <main id="tab-bleeding" class="hidden grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 animate-fade-in">
+        <main id="tab-bleeding" class="hidden grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 w-full animate-fade-in flex-grow">
             <section class="glass-panel rounded-3xl p-6 lg:p-8 flex flex-col gap-4 lg:col-span-8 overflow-y-auto max-h-[70vh]">
-                <h2 class="text-lg font-bold text-blue-900 border-b border-rose-200/50 pb-3 flex items-center gap-2" id="t-hasbledTitle">
+                <h2 class="text-lg font-bold text-blue-900 border-b border-rose-100 pb-4 flex items-center gap-2" id="t-hasbledTitle">
                     <i data-lucide="droplet" class="w-5 h-5 text-rose-500"></i> Риск геморрагических осложнений (HAS-BLED)
                 </h2>
-                <div id="hasbledForm" class="flex flex-col gap-2 mt-2"></div>
+                <div id="hasbledForm" class="flex flex-col gap-2"></div>
             </section>
             <section class="lg:col-span-4">
                 <div class="glass-panel rounded-3xl p-6 lg:p-8 sticky top-6">
-                    <h2 class="text-sm font-bold text-blue-900/60 uppercase tracking-wider mb-2" id="t-hasbledScoreTitle">Сумма баллов</h2>
+                    <h2 class="text-xs font-bold text-blue-900/60 uppercase tracking-wider mb-2" id="t-hasbledScoreTitle">Сумма баллов</h2>
                     <div class="flex items-end gap-2 mb-6">
                         <span id="hasbledScoreVal" class="text-5xl font-bold text-rose-600 leading-none">0</span>
                     </div>
-                    <div class="bg-white/80 rounded-2xl p-5 border shadow-sm" id="hasbledResultBox">
+                    <div class="bg-white/80 rounded-2xl p-5 border shadow-sm">
                         <span class="text-xs font-bold uppercase tracking-wider text-blue-900/50 block mb-2" id="t-hasbledResLabel">Интерпретация риска</span>
                         <p id="hasbledResultText" class="text-sm font-semibold leading-relaxed text-blue-900">-</p>
                     </div>
@@ -292,20 +302,20 @@
         </main>
 
         <!-- TAB 4: CHA2DS2-VASc -->
-        <main id="tab-chads" class="hidden grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 animate-fade-in">
+        <main id="tab-chads" class="hidden grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 w-full animate-fade-in flex-grow">
             <section class="glass-panel rounded-3xl p-6 lg:p-8 flex flex-col gap-4 lg:col-span-8 overflow-y-auto max-h-[70vh]">
-                <h2 class="text-lg font-bold text-blue-900 border-b border-indigo-200/50 pb-3 flex items-center gap-2" id="t-chadsTitle">
+                <h2 class="text-lg font-bold text-blue-900 border-b border-indigo-100 pb-4 flex items-center gap-2" id="t-chadsTitle">
                     <i data-lucide="heart-pulse" class="w-5 h-5 text-indigo-500"></i> Риск тромбоэмболии (CHA₂DS₂-VASc)
                 </h2>
-                <div id="chadsForm" class="flex flex-col gap-2 mt-2"></div>
+                <div id="chadsForm" class="flex flex-col gap-2"></div>
             </section>
             <section class="lg:col-span-4">
                 <div class="glass-panel rounded-3xl p-6 lg:p-8 sticky top-6">
-                    <h2 class="text-sm font-bold text-blue-900/60 uppercase tracking-wider mb-2" id="t-chadsScoreTitle">Сумма баллов</h2>
+                    <h2 class="text-xs font-bold text-blue-900/60 uppercase tracking-wider mb-2" id="t-chadsScoreTitle">Сумма баллов</h2>
                     <div class="flex items-end gap-2 mb-6">
                         <span id="chadsScoreVal" class="text-5xl font-bold text-indigo-600 leading-none">0</span>
                     </div>
-                    <div class="bg-white/80 rounded-2xl p-5 border shadow-sm" id="chadsResultBox">
+                    <div class="bg-white/80 rounded-2xl p-5 border shadow-sm">
                         <span class="text-xs font-bold uppercase tracking-wider text-blue-900/50 block mb-2" id="t-chadsResLabel">Показания к мост-терапии</span>
                         <p id="chadsResultText" class="text-sm font-semibold leading-relaxed text-blue-900">-</p>
                     </div>
@@ -313,30 +323,52 @@
             </section>
         </main>
 
-    </div>
+        <!-- Footer -->
+        <footer id="appFooter" class="mt-8 pt-4 w-full transition-all duration-300">
+            <div class="glass-panel rounded-3xl p-5 text-center max-w-4xl mx-auto border border-sky-100 shadow-sm">
+                
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div class="flex flex-col items-center md:items-start text-center md:text-left">
+                        <h3 class="font-bold text-blue-950 text-sm" id="t-creator">Создатель: Мендибаев Макарий Сергеевич</h3>
+                        <p class="text-xs font-medium text-blue-900/70" id="t-workplace">ГБУЗ ГКБ им. В.П. Демихова ДЗМ. Врач анестезиолог-реаниматолог.</p>
+                    </div>
+                    
+                    <button id="copyEmailBtn" class="inline-flex items-center gap-2 px-4 py-2 bg-sky-100 hover:bg-sky-200 text-sky-800 rounded-full font-semibold transition-all duration-300 shadow-sm focus:outline-none shrink-0">
+                        <span id="emailIconWrap"><i data-lucide="mail" class="w-4 h-4"></i></span>
+                        <span id="emailText" class="text-[11px] md:text-xs tracking-wide">makariy.mendibaev@yandex.ru</span>
+                    </button>
+                </div>
 
-    <!-- Footer -->
-    <footer class="mt-4 mb-12 px-4 md:px-8 w-full">
-        <div class="glass-panel rounded-3xl p-6 text-center max-w-4xl mx-auto flex flex-col items-center gap-3">
-            <h3 class="font-bold text-blue-950" id="t-creator">Создатель: Мендибаев Макарий Сергеевич</h3>
-            <p class="text-sm font-medium text-blue-900/70" id="t-workplace">ГБУЗ ГКБ им. В.П. Демихова ДЗМ. Врач анестезиолог-реаниматолог.</p>
-            
-            <button id="copyEmailBtn" class="mt-2 inline-flex items-center gap-2 px-5 py-2.5 bg-sky-100 hover:bg-sky-200 text-sky-800 rounded-full font-semibold transition-all duration-300 shadow-sm focus:outline-none">
-                <span id="emailIconWrap"><i data-lucide="mail" class="w-4 h-4"></i></span>
-                <span id="emailText">makariy.mendibaev@yandex.ru</span>
-            </button>
-
-            <div class="mt-4 pt-4 border-t border-sky-200/50 w-full text-left bg-rose-50/40 p-4 rounded-2xl flex items-start gap-3">
-                <i data-lucide="info" class="w-5 h-5 text-rose-500 shrink-0 mt-0.5"></i>
-                <div>
-                    <p class="text-xs font-bold text-rose-800 uppercase tracking-wider mb-1" id="t-disclaimerTitle">Важное предостережение</p>
-                    <p class="text-xs font-medium text-rose-900/80 leading-relaxed" id="t-disclaimerText">Данная система носит исключительно информационный и рекомендательный характер, не заменяет клиническое мышление и официальные инструкции к препаратам. Окончательное решение о тактике ведения принимает лечащий врач на основе индивидуальных особенностей пациента.</p>
+                <div class="mt-4 border-t border-sky-100 pt-3">
+                    <details class="text-left group cursor-pointer">
+                        <summary class="text-xs font-bold text-rose-600 hover:text-rose-800 uppercase tracking-wider flex items-center justify-center gap-2 focus:outline-none transition-colors">
+                            <i data-lucide="alert-circle" class="w-4 h-4"></i>
+                            <span id="t-disclaimerTitle">Ограничение ответственности</span>
+                        </summary>
+                        <p class="text-[11px] font-medium text-rose-900/80 mt-3 leading-relaxed bg-rose-50/50 p-3 rounded-xl border border-rose-100" id="t-disclaimerText">
+                            Информационная СППВР. Не заменяет клиническое мышление и официальные инструкции к препаратам. Решение принимает врач.
+                        </p>
+                    </details>
                 </div>
             </div>
-        </div>
-    </footer>
+        </footer>
+
+    </div>
 
     <script>
+        // Global Accordion function to replace native detail issues
+        window.toggleAccordion = function(contentId, iconId) {
+            const content = document.getElementById(contentId);
+            const icon = document.getElementById(iconId);
+            if(content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                content.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        };
+
         const ExpertApp = {
             lang: 'ru',
             ui: {},
@@ -349,6 +381,7 @@
                 dose: 'low',
                 gfr: 'normal',
                 aggregationNormal: false,
+                traumaticTap: false,
                 bmiExtreme: false,
                 capriniScore: 0,
                 paduaScore: 0,
@@ -368,7 +401,7 @@
                     { pts: 1, items: [
                         { id: 'c1_1', ru: 'Возраст 41-60 лет', en: 'Age 41-60 years' },
                         { id: 'c1_2', ru: 'Малая операция', en: 'Minor surgery' },
-                        { id: 'c1_3', ru: 'ИМТ > 25', en: 'BMI > 25' },
+                        { id: 'c1_3', ru: 'ИМТ > 25 кг/м²', en: 'BMI > 25 kg/m²' },
                         { id: 'c1_4', ru: 'Отек нижних конечностей', en: 'Swollen legs' },
                         { id: 'c1_5', ru: 'Варикозное расширение вен', en: 'Varicose veins' },
                         { id: 'c1_6', ru: 'Беременность или послеродовый период', en: 'Pregnancy or postpartum' },
@@ -415,9 +448,9 @@
                     { id: 'p2', pts: 3, ru: 'ВТЭО в анамнезе', en: 'Prior VTE' },
                     { id: 'p3', pts: 3, ru: 'Ограничение подвижности (> 3 дней)', en: 'Reduced mobility (> 3 days)' },
                     { id: 'p4', pts: 3, ru: 'Тромбофилия', en: 'Thrombophilia' },
-                    { id: 'p5', pts: 2, ru: 'Недавняя травма или хирургическая операция (≤ 1 мес)', en: 'Recent trauma/surgery (≤ 1 month)' },
+                    { id: 'p5', pts: 2, ru: 'Недавняя травма/операция (≤ 1 мес)', en: 'Recent trauma/surgery (≤ 1 month)' },
                     { id: 'p6', pts: 1, ru: 'Возраст ≥ 70 лет', en: 'Age ≥ 70 years' },
-                    { id: 'p7', pts: 1, ru: 'Сердечная или дыхательная недостаточность', en: 'Heart or respiratory failure' },
+                    { id: 'p7', pts: 1, ru: 'Сердечная/дыхательная недостаточность', en: 'Heart or respiratory failure' },
                     { id: 'p8', pts: 1, ru: 'Острый ИМ или ишемический инсульт', en: 'Acute MI or ischemic stroke' },
                     { id: 'p9', pts: 1, ru: 'Острая инфекция / ревматологическое заболевание', en: 'Acute infection / rheumatologic disorder' },
                     { id: 'p10', pts: 1, ru: 'Ожирение (ИМТ > 30)', en: 'Obesity (BMI > 30)' },
@@ -451,14 +484,14 @@
                     t_appTitle: "CoagulaCalm",
                     t_appSubtitle: "Клиническая система поддержки принятия решений",
                     t_tabPeri: "Регионарная анестезия",
-                    t_tabVTE: "Риск ВТЭО (Caprini/Padua)",
-                    t_tabBleeding: "Кровотечения (HAS-BLED)",
-                    t_tabChads: "Шкала CHA₂DS₂-VASc",
+                    t_tabVTE: "Риск ВТЭО",
+                    t_tabBleeding: "HAS-BLED",
+                    t_tabChads: "CHA₂DS₂-VASc",
                     
                     t_inputTitle: "Клинические параметры",
                     t_lblBlockade: "Вид регионарной анестезии",
-                    t_optDeep: "Глубокая (НАБ, плексусная, глубокая фасциальная)",
-                    t_optSuper: "Поверхностная (поверхностные фасциальные, подкожные)",
+                    t_optDeep: "Глубокая блокада",
+                    t_optSuper: "Поверхностная блокада",
                     t_lblGroup: "Группа антитромботических средств",
                     t_optDoac: "Прямые пероральные антикоагулянты (ПОАК)",
                     t_optParenteral: "Парентеральные антикоагулянты (НМГ, НФГ)",
@@ -476,6 +509,8 @@
                     
                     t_lblAggrTitle: "Агрегатограмма тромбоцитов",
                     t_lblAggrDesc: "Инструментально подтвержденная нормоагрегация",
+                    t_lblTraumaTitle: "Травматичная манипуляция",
+                    t_lblTraumaDesc: "Примесь крови при выполнении пункции/катетеризации",
                     t_lblBmiTitle: "Экстремальное ожирение",
                     t_lblBmiDesc: "ИМТ > 40 кг/м² или вес > 150 кг",
                     
@@ -485,8 +520,10 @@
                     t_warnBridgeTitle: "Показана переходная (мост) терапия",
                     t_warnBridgeDesc: "Оценка по шкале CHA₂DS₂-VASc (≥ 5 баллов) указывает на высокий риск. При отмене варфарина требуется назначение лечебных доз НМГ/НФГ.",
                     
-                    t_tegToggle: "Клиническое примечание (ТЭГ / РОТЭМ)",
-                    t_tegWarnTxt: "Использование инструментальных методов (ТЭГ/РОТЭМ) для оценки остаточной активности ПОАК перед выполнением регионарной анестезии нецелесообразно. Стандартные активаторы маскируют эффект малых доз препарата, создавая иллюзию нормокоагуляции при сохраняющемся риске формирования гематомы. Основным критерием безопасности служит фармакокинетический временной интервал.",
+                    t_doacNoteTitle: "Клинические примечания (ПОАК)",
+                    t_doacNote1: "Остаточная концентрация ПОАК в плазме < 30 нг/мл или анти-Ха активность ≤ 0.1 МЕ/мл считается приемлемой для выполнения глубокой блокады.",
+                    t_doacNote2: "Использование специфических антидотов или КПК для обеспечения возможности выполнения блокады у рутинных пациентов строго не рекомендуется.",
+                    t_tegWarnTxt: "Использование тромбоэластографии (ТЭГ) для оценки остаточного эффекта ПОАК недопустимо ввиду высокого риска получения ложнонормальных результатов.",
                     
                     t_revTitle: "Протокол экстренной реверсии",
                     t_revSubtitle: "При развитии жизнеугрожающего кровотечения:",
@@ -503,11 +540,11 @@
                     
                     t_creator: "Создатель: Мендибаев Макарий Сергеевич",
                     t_workplace: "ГБУЗ ГКБ им. В.П. Демихова ДЗМ. Врач анестезиолог-реаниматолог.",
-                    t_disclaimerTitle: "Важное предостережение",
-                    t_disclaimerText: "Данная система носит исключительно информационный и рекомендательный характер, не заменяет клиническое мышление и официальные инструкции к препаратам. Окончательное решение о тактике ведения принимает лечащий врач на основе индивидуальных особенностей пациента.",
+                    t_disclaimerTitle: "Ограничение ответственности",
+                    t_disclaimerText: "Информационная СППВР. Не заменяет клиническое мышление и инструкции к препаратам. Решение принимает врач.",
                     t_copied: "Скопировано!",
                     
-                    d_rivaroxaban: "Ривароксабан / Эдоксабан",
+                    d_rivaroxaban: "Ривароксабан",
                     d_apixaban: "Апиксабан",
                     d_dabigatran: "Дабигатран",
                     d_lmwh: "НМГ (эноксапарин и аналоги)",
@@ -535,14 +572,14 @@
                     t_appTitle: "CoagulaCalm",
                     t_appSubtitle: "Clinical Decision Support System",
                     t_tabPeri: "Regional Anesthesia",
-                    t_tabVTE: "VTE Risk (Caprini/Padua)",
-                    t_tabBleeding: "Bleeding Risk (HAS-BLED)",
-                    t_tabChads: "CHA₂DS₂-VASc Score",
+                    t_tabVTE: "VTE Risk",
+                    t_tabBleeding: "HAS-BLED",
+                    t_tabChads: "CHA₂DS₂-VASc",
                     
                     t_inputTitle: "Clinical Parameters",
-                    t_lblBlockade: "Type of Regional Anesthesia",
-                    t_optDeep: "Neuraxial / Deep Fascial Block",
-                    t_optSuper: "Superficial Fascial Block",
+                    t_lblBlockade: "Regional Anesthesia Type",
+                    t_optDeep: "Deep Block",
+                    t_optSuper: "Superficial Block",
                     t_lblGroup: "Antithrombotic Class",
                     t_optDoac: "Direct Oral Anticoagulants (DOAC)",
                     t_optParenteral: "Parenteral Anticoagulants (LMWH, UFH)",
@@ -560,6 +597,8 @@
                     
                     t_lblAggrTitle: "Platelet Aggregation",
                     t_lblAggrDesc: "Instrumentally confirmed normal aggregation",
+                    t_lblTraumaTitle: "Traumatic Puncture",
+                    t_lblTraumaDesc: "Presence of blood during needle/catheter placement",
                     t_lblBmiTitle: "Extreme Obesity",
                     t_lblBmiDesc: "BMI > 40 kg/m² or Weight > 150 kg",
                     
@@ -569,8 +608,10 @@
                     t_warnBridgeTitle: "Bridge Therapy Indicated",
                     t_warnBridgeDesc: "CHA₂DS₂-VASc score (≥ 5) indicates high risk. Bridging with therapeutic LMWH/UFH is mandatory upon VKA discontinuation.",
                     
-                    t_tegToggle: "Clinical Note (TEG / ROTEM)",
-                    t_tegWarnTxt: "Utilization of thromboelastography (TEG) to assess residual effects of DOACs before regional anesthesia is strongly discouraged due to false-normal results. Pharmacokinetic timeline is the only safe criterion.",
+                    t_doacNoteTitle: "Clinical Notes (DOAC)",
+                    t_doacNote1: "Residual DOAC plasma concentration < 30 ng/mL or anti-Xa activity ≤ 0.1 IU/mL is acceptable for deep blockade.",
+                    t_doacNote2: "Using specific antidotes or PCC solely to enable neuraxial block in routine patients is strictly not recommended.",
+                    t_tegWarnTxt: "Utilization of thromboelastography (TEG) to assess residual effects of DOACs is strictly prohibited due to false-normal results.",
                     
                     t_revTitle: "Emergency Reversal Protocol",
                     t_revSubtitle: "For life-threatening hemorrhage:",
@@ -585,13 +626,13 @@
                     t_chadsScoreTitle: "Total Score",
                     t_chadsResLabel: "Bridging Indication",
                     
-                    t_creator: "Creator: Makariy S. Mendibaev",
+                    t_creator: "Creator: M.S. Mendibaev",
                     t_workplace: "V.P. Demikhov City Clinical Hospital. Anesthesiologist-Intensivist.",
-                    t_disclaimerTitle: "Important Disclaimer",
-                    t_disclaimerText: "This application is a clinical decision support tool. It does not replace clinical judgment, official drug monographs, or institutional guidelines. The final decision rests with the attending physician.",
+                    t_disclaimerTitle: "Disclaimer",
+                    t_disclaimerText: "Clinical decision support tool. Does not replace clinical judgment or official drug monographs. Final decision rests with the physician.",
                     t_copied: "Copied!",
                     
-                    d_rivaroxaban: "Rivaroxaban / Edoxaban",
+                    d_rivaroxaban: "Rivaroxaban",
                     d_apixaban: "Apixaban",
                     d_dabigatran: "Dabigatran",
                     d_lmwh: "LMWH (Enoxaparin, etc.)",
@@ -630,10 +671,10 @@
             bindElements() {
                 const ids = [
                     'selBlockade', 'selGroup', 'selDrug', 'selDose', 'selGfr', 
-                    'chkAggregation', 'chkBmi', 'langToggle', 
-                    'txtReversal', 'visualTimeline',
-                    'wrapDose', 'wrapGfr', 'wrapAggregation', 'wrapBmi', 
-                    'tegWarning', 'globalWarningContainer', 'warnVteBleed', 'warnBridge',
+                    'chkAggregation', 'chkTrauma', 'chkBmi', 'langToggle', 
+                    'txtReversal', 'visualTimeline', 'doacNote', 'appFooter',
+                    'wrapDose', 'wrapGfr', 'wrapAggregation', 'wrapTrauma', 'wrapBmi',
+                    'globalWarningContainer', 'warnVteBleed', 'warnBridge',
                     'lbl-ru', 'lbl-en', 'btnCaprini', 'btnPadua',
                     'tab-perioperative', 'tab-vte', 'tab-bleeding', 'tab-chads',
                     'capriniForm', 'paduaForm', 'hasbledForm', 'chadsForm',
@@ -722,12 +763,19 @@
                 document.querySelectorAll('.tab-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                        e.target.classList.add('active');
-                        this.state.activeTab = e.target.dataset.tab;
+                        e.currentTarget.classList.add('active');
+                        this.state.activeTab = e.currentTarget.dataset.tab;
+                        
                         ['perioperative', 'vte', 'bleeding', 'chads'].forEach(tab => {
-                            this.ui[`tab-${tab}`].classList.add('hidden');
+                            if(this.ui[`tab-${tab}`]) this.ui[`tab-${tab}`].classList.add('hidden');
                         });
-                        this.ui[`tab-${this.state.activeTab}`].classList.remove('hidden');
+                        if(this.ui[`tab-${this.state.activeTab}`]) this.ui[`tab-${this.state.activeTab}`].classList.remove('hidden');
+                        
+                        if (this.state.activeTab === 'perioperative') {
+                            if(this.ui.appFooter) this.ui.appFooter.classList.remove('hidden');
+                        } else {
+                            if(this.ui.appFooter) this.ui.appFooter.classList.add('hidden');
+                        }
                     });
                 });
 
@@ -745,6 +793,13 @@
                 if(this.ui.chkAggregation) {
                     this.ui.chkAggregation.addEventListener('change', (e) => {
                         this.state.aggregationNormal = e.target.checked;
+                        this.calculatePerioperative();
+                    });
+                }
+
+                if(this.ui.chkTrauma) {
+                    this.ui.chkTrauma.addEventListener('change', (e) => {
+                        this.state.traumaticTap = e.target.checked;
                         this.calculatePerioperative();
                     });
                 }
@@ -830,27 +885,49 @@
                 }
 
                 if (group === 'parenteral') {
-                    this.ui.wrapBmi.classList.remove('hidden');
-                    this.ui.wrapBmi.classList.add('flex');
+                    if(this.ui.wrapBmi) {
+                        this.ui.wrapBmi.classList.remove('hidden');
+                        this.ui.wrapBmi.classList.add('flex');
+                    }
                 } else {
-                    this.ui.wrapBmi.classList.add('hidden');
-                    this.ui.wrapBmi.classList.remove('flex');
+                    if(this.ui.wrapBmi) {
+                        this.ui.wrapBmi.classList.add('hidden');
+                        this.ui.wrapBmi.classList.remove('flex');
+                    }
                     this.state.bmiExtreme = false;
                     if(this.ui.chkBmi) this.ui.chkBmi.checked = false;
                 }
 
-                if (group === 'doac') {
-                    this.ui.tegWarning.classList.remove('hidden');
+                if (drug === 'lmwh' && blockade === 'deep') {
+                    if(this.ui.wrapTrauma) {
+                        this.ui.wrapTrauma.classList.remove('hidden');
+                        this.ui.wrapTrauma.classList.add('flex');
+                    }
                 } else {
-                    this.ui.tegWarning.classList.add('hidden');
+                    if(this.ui.wrapTrauma) {
+                        this.ui.wrapTrauma.classList.add('hidden');
+                        this.ui.wrapTrauma.classList.remove('flex');
+                    }
+                    this.state.traumaticTap = false;
+                    if(this.ui.chkTrauma) this.ui.chkTrauma.checked = false;
+                }
+
+                if (group === 'doac') {
+                    if(this.ui.doacNote) this.ui.doacNote.classList.remove('hidden');
+                } else {
+                    if(this.ui.doacNote) this.ui.doacNote.classList.add('hidden');
                 }
 
                 if (group === 'antiplatelet' && blockade === 'deep' && drug !== 'aspirin') {
-                    this.ui.wrapAggregation.classList.remove('hidden');
-                    this.ui.wrapAggregation.classList.add('flex');
+                    if(this.ui.wrapAggregation) {
+                        this.ui.wrapAggregation.classList.remove('hidden');
+                        this.ui.wrapAggregation.classList.add('flex');
+                    }
                 } else {
-                    this.ui.wrapAggregation.classList.add('hidden');
-                    this.ui.wrapAggregation.classList.remove('flex');
+                    if(this.ui.wrapAggregation) {
+                        this.ui.wrapAggregation.classList.add('hidden');
+                        this.ui.wrapAggregation.classList.remove('flex');
+                    }
                     this.state.aggregationNormal = false;
                     if(this.ui.chkAggregation) this.ui.chkAggregation.checked = false;
                 }
@@ -870,43 +947,28 @@
 
             buildTimelineHTML(steps) {
                 let html = '';
-                steps.forEach((s, idx) => {
+                steps.forEach((s) => {
                     let dotColor = "bg-sky-500", textColor = "text-sky-600";
                     let iconHTML = '';
                     if(s.type === 'stop') { dotColor = "bg-rose-500"; textColor = "text-rose-600"; }
-                    else if(s.type === 'surgery') { dotColor = "bg-emerald-500"; textColor = "text-emerald-600"; iconHTML = `<div class="absolute -left-[14px] -top-1 w-7 h-7 rounded-full bg-emerald-100 flex items-center justify-center ring-4 ring-white"><i data-lucide="activity" class="w-4 h-4 text-emerald-600"></i></div>`; }
+                    else if(s.type === 'surgery') { dotColor = "bg-emerald-500"; textColor = "text-emerald-600"; iconHTML = `<div class="absolute -left-[14px] -top-1 w-7 h-7 rounded-full bg-emerald-100 flex items-center justify-center ring-4 ring-white shadow-sm"><i data-lucide="activity" class="w-4 h-4 text-emerald-600"></i></div>`; }
                     else if(s.type === 'resume') { dotColor = "bg-indigo-500"; textColor = "text-indigo-600"; }
                     else if(s.type === 'check') { dotColor = "bg-amber-500"; textColor = "text-amber-600"; }
+                    else if(s.type === 'warning') { dotColor = "bg-rose-600"; textColor = "text-rose-700"; }
                     
                     html += `
-                    <div class="relative pl-6 pb-2">
-                        ${iconHTML === '' ? `<div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full ${dotColor} ring-4 ring-white"></div>` : iconHTML}
+                    <div class="relative pl-6 pb-2 mt-2">
+                        ${iconHTML === '' ? `<div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full ${dotColor} ring-4 ring-white shadow-sm"></div>` : iconHTML}
                         <p class="text-[11px] font-bold ${textColor} uppercase tracking-wider">${s.time}</p>
-                        <p class="text-sm font-medium text-blue-950 mt-1 pb-1 leading-snug">${s.text}</p>
+                        <p class="text-sm font-semibold text-blue-950 mt-1 pb-1 leading-snug">${s.text}</p>
                     </div>`;
                 });
                 return html;
             },
 
-            getLogicText(lang) {
-                const isEn = lang === 'en';
-                return {
-                    doacProph: isEn ? "≥ 6-12 hours post-surgery and ≥ 6 hours after catheter removal." : "≥ 6-12 часов после операции и ≥ 6 часов после удаления катетера.",
-                    doacTherap: isEn ? "≥ 48 hours post-surgery and ≥ 6 hours after catheter removal." : "≥ 48 часов после операции и ≥ 6 часов после удаления катетера.",
-                    lmwhProph: isEn ? "≥ 4 hours after catheter removal (and ≥ 12h post-puncture)." : "≥ 4 часов после удаления катетера (и ≥ 12 ч после пункции).",
-                    lmwhTherap: isEn ? "≥ 4 hours after catheter removal (and ≥ 24-48h post-puncture)." : "≥ 4 часов после удаления катетера (и ≥ 24-48 ч после пункции).",
-                    ufhResume: isEn ? "≥ 1 hour after puncture or catheter removal." : "≥ 1 часа после пункции или извлечения катетера.",
-                    fondaProph: isEn ? "6 hours after catheter removal." : "Через 6 часов после удаления катетера.",
-                    fondaTherap: isEn ? "Strictly contraindicated." : "Строго противопоказано.",
-                    warfResume: isEn ? "Immediate resumption post-op (bridge therapy pending target INR)." : "Возможен немедленный прием (мост-терапия до достижения целевого МНО).",
-                    antiResume: isEn ? "Immediately after catheter removal (if loading dose — wait 6 hours)." : "Немедленно после удаления катетера (в случае нагрузочной дозы — через 6 часов)."
-                };
-            },
-
             calculatePerioperative() {
-                const { blockade, group, drug, dose, gfr, aggregationNormal, bmiExtreme, chadsScore, hasbledScore, capriniScore, paduaScore, vteMode } = this.state;
+                const { blockade, group, drug, dose, gfr, aggregationNormal, traumaticTap, bmiExtreme, chadsScore, hasbledScore, capriniScore, paduaScore, vteMode } = this.state;
                 const dict = this.i18n[this.lang];
-                const logic = this.getLogicText(this.lang);
                 const isEn = this.lang === 'en';
 
                 let revKey = "rev_none";
@@ -917,25 +979,22 @@
                 if (drug === 'lmwh' || drug === 'fondaparinux') revKey = "rev_lmwh";
                 if (drug === 'ufh') revKey = "rev_ufh";
 
-                // VTE vs Bleed Cross-Talk 
                 const isHighVte = (vteMode === 'caprini' && capriniScore >= 5) || (vteMode === 'padua' && paduaScore >= 4);
                 let avoidPharmacoprophylaxis = (isHighVte && hasbledScore >= 3);
                 
                 if (avoidPharmacoprophylaxis) {
-                    this.ui.warnVteBleed.classList.remove('hidden');
+                    if(this.ui.warnVteBleed) this.ui.warnVteBleed.classList.remove('hidden');
                 } else {
-                    this.ui.warnVteBleed.classList.add('hidden');
+                    if(this.ui.warnVteBleed) this.ui.warnVteBleed.classList.add('hidden');
                 }
 
-                // Bridge Warning
                 let needsBridge = (drug === 'warfarin' && chadsScore >= 5);
                 if (needsBridge) {
-                    this.ui.warnBridge.classList.remove('hidden');
+                    if(this.ui.warnBridge) this.ui.warnBridge.classList.remove('hidden');
                 } else {
-                    this.ui.warnBridge.classList.add('hidden');
+                    if(this.ui.warnBridge) this.ui.warnBridge.classList.add('hidden');
                 }
 
-                // Generate Timeline Steps
                 let steps = [];
 
                 if (blockade === 'superficial') {
@@ -944,36 +1003,40 @@
                 } 
                 else if (group === 'antiplatelet' && aggregationNormal && drug !== 'aspirin') {
                     steps.push({ type: 'check', time: isEn ? "Pre-op" : "До операции", text: dict.tl_stop_aggr });
-                    steps.push({ type: 'surgery', time: "День 0", text: isEn ? "Puncture / Surgery" : "Пункция / Операция" });
+                    steps.push({ type: 'surgery', time: "День 0", text: isEn ? "Puncture/Surgery" : "Пункция / Хирургия" });
                 }
                 else {
-                    let resumeProph = isEn ? "≥ 6-12h post-surgery / ≥ 6h after catheter removal" : "≥ 6-12 ч после операции / ≥ 6 ч после удаления катетера";
-                    let resumeTherap = isEn ? "≥ 48h post-surgery / ≥ 6h after catheter removal" : "≥ 48 ч после операции / ≥ 6 ч после удаления катетера";
-                    
-                    if (avoidPharmacoprophylaxis) {
-                        resumeProph = isEn ? "Contraindicated (High bleeding risk). Use mechanical prophylaxis." : "Противопоказано (Высокий риск кровотечения). Использовать аппаратную пневмокомпрессию.";
-                    }
-
                     switch(drug) {
                         case 'rivaroxaban':
-                        case 'apixaban':
                             if (gfr === 'severe') {
-                                steps.push({ type: 'stop', time: "Внимание", text: isEn ? "Strictly contraindicated (GFR < 30 ml/min)." : "Применение препарата при СКФ < 30 мл/мин противопоказано." });
+                                steps.push({ type: 'warning', time: "Внимание", text: isEn ? "Strictly contraindicated (GFR < 30 ml/min)." : "Применение препарата при СКФ < 30 мл/мин противопоказано." });
                             } else {
                                 let stopTime = "72";
                                 if(dose === 'low') {
-                                    if (gfr === 'moderate') stopTime = (drug === 'rivaroxaban') ? "36" : "48";
-                                    else stopTime = (drug === 'rivaroxaban') ? "24" : "36";
+                                    if (gfr === 'moderate') stopTime = "30"; 
+                                    else stopTime = "24";
                                 }
                                 steps.push({ type: 'stop', time: isEn ? `-${stopTime} hours` : `-${stopTime} часов`, text: isEn ? "Discontinue drug" : "Отмена препарата" });
                                 steps.push({ type: 'surgery', time: "День 0", text: isEn ? "Puncture / Catheter Manipulation" : "Пункция / Удаление катетера" });
-                                steps.push({ type: 'resume', time: isEn ? "Post-op" : "После операции", text: dose === 'low' ? resumeProph : resumeTherap });
+                                steps.push({ type: 'resume', time: isEn ? "Post-op" : "После операции", text: dose === 'low' ? (isEn ? "Resume after 6 hours" : "Возобновление через 6 часов") : (isEn ? "Resume after 48 hours" : "Возобновление через 48 часов") });
+                            }
+                            break;
+                            
+                        case 'apixaban':
+                            if (gfr === 'severe') {
+                                steps.push({ type: 'warning', time: "Внимание", text: isEn ? "Strictly contraindicated (GFR < 30 ml/min)." : "Применение препарата при СКФ < 30 мл/мин противопоказано." });
+                            } else {
+                                let stopTime = "72";
+                                if(dose === 'low') stopTime = "36"; 
+                                steps.push({ type: 'stop', time: isEn ? `-${stopTime} hours` : `-${stopTime} часов`, text: isEn ? "Discontinue drug" : "Отмена препарата" });
+                                steps.push({ type: 'surgery', time: "День 0", text: isEn ? "Puncture / Catheter Manipulation" : "Пункция / Удаление катетера" });
+                                steps.push({ type: 'resume', time: isEn ? "Post-op" : "После операции", text: dose === 'low' ? (isEn ? "Resume after 6 hours" : "Возобновление через 6 часов") : (isEn ? "Resume after 48 hours" : "Возобновление через 48 часов") });
                             }
                             break;
                             
                         case 'dabigatran':
                             if (gfr === 'severe') {
-                                steps.push({ type: 'stop', time: "Внимание", text: isEn ? "Strictly contraindicated (GFR < 30 ml/min)." : "Применение препарата при СКФ < 30 мл/мин противопоказано." });
+                                steps.push({ type: 'warning', time: "Внимание", text: isEn ? "Strictly contraindicated (GFR < 30 ml/min)." : "Применение препарата при СКФ < 30 мл/мин противопоказано." });
                             } else {
                                 let dStop = "48";
                                 if(dose === 'high') {
@@ -983,50 +1046,50 @@
                                 }
                                 steps.push({ type: 'stop', time: isEn ? `-${dStop} hours` : `-${dStop} часов`, text: isEn ? "Discontinue drug" : "Отмена препарата" });
                                 steps.push({ type: 'surgery', time: "День 0", text: isEn ? "Puncture / Catheter Manipulation" : "Пункция / Удаление катетера" });
-                                steps.push({ type: 'resume', time: isEn ? "Post-op" : "После операции", text: dose === 'low' ? resumeProph : resumeTherap });
+                                steps.push({ type: 'resume', time: isEn ? "Post-op" : "После операции", text: dose === 'low' ? (isEn ? "Resume after 6 hours" : "Возобновление через 6 часов") : (isEn ? "Resume after 48 hours" : "Возобновление через 48 часов") });
                             }
                             break;
                             
                         case 'lmwh':
                             let lStop = (dose === 'low') ? (gfr === 'severe' ? "24" : "12") : (gfr === 'severe' ? "48" : "24");
-                            let lResume = (dose === 'low') ? logic.lmwhProph : logic.lmwhTherap;
+                            let lResume = (isEn ? "≥ 4h after catheter removal" : "Не ранее чем через 4 ч после извлечения катетера");
                             
-                            if(bmiExtreme && dose === 'low') lResume = (isEn ? "High prophylactic dose: " : "Усиленные дозы: ") + logic.lmwhProph;
-                            if(avoidPharmacoprophylaxis) lResume = isEn ? "Contraindicated (High bleeding risk)" : "Противопоказано (Высокий риск кровотечения)";
-                            
-                            steps.push({ type: 'stop', time: isEn ? `-${lStop} hours` : `-${lStop} часов`, text: isEn ? "Last dose before puncture/removal" : "Последнее введение до пункции/извлечения" });
+                            if (traumaticTap) {
+                                lResume = isEn ? "Delay initiation by 24h due to traumatic tap. Discuss with surgeon." : "Начало послеоперационной терапии НМГ должно быть отложено на 24 часа после травматичной манипуляции, решение необходимо обсудить с хирургом.";
+                            }
+
+                            steps.push({ type: 'stop', time: isEn ? `-${lStop} hours` : `-${lStop} часов`, text: isEn ? "Discontinue drug" : "Отмена препарата" });
                             steps.push({ type: 'surgery', time: "День 0", text: isEn ? "Puncture / Catheter Manipulation" : "Пункция / Удаление катетера" });
                             steps.push({ type: 'resume', time: isEn ? "Post-op" : "После операции", text: lResume });
+                            
                             if (gfr === 'severe' && dose === 'low') {
-                                steps.push({ type: 'check', time: "Note", text: isEn ? "Consider UFH for GFR < 30" : "При СКФ < 30 предпочтителен НФГ" });
+                                steps.push({ type: 'check', time: "Note", text: isEn ? "Consider dose reduction by 50%" : "Рассмотреть снижение дозы препарата вдвое" });
                             }
                             break;
                             
                         case 'fondaparinux':
                             if (gfr === 'severe') {
-                                steps.push({ type: 'stop', time: "Внимание", text: isEn ? "Strictly contraindicated (GFR < 30 ml/min)." : "Применение препарата при СКФ < 30 мл/мин противопоказано." });
+                                steps.push({ type: 'warning', time: "Внимание", text: isEn ? "Strictly contraindicated (GFR < 30 ml/min)." : "Применение препарата при СКФ < 30 мл/мин противопоказано." });
+                            } else if (dose === 'high') {
+                                steps.push({ type: 'warning', time: "Внимание", text: isEn ? "Strictly contraindicated for deep blocks" : "Выполнение глубоких блокад строго противопоказано." });
                             } else {
                                 let fStop = (gfr === 'moderate') ? "72" : "36";
-                                if (dose === 'high') {
-                                    steps.push({ type: 'stop', time: "Warning", text: isEn ? "Strictly contraindicated for deep blocks" : "Строго противопоказано для глубоких блокад" });
-                                } else {
-                                    steps.push({ type: 'stop', time: isEn ? `-${fStop} hours` : `-${fStop} часов`, text: isEn ? "Discontinue drug (consider dose reduction)" : "Отмена препарата (рассмотреть снижение дозы)" });
-                                    steps.push({ type: 'surgery', time: "День 0", text: isEn ? "Puncture / Catheter Manipulation" : "Пункция / Удаление катетера" });
-                                    steps.push({ type: 'resume', time: isEn ? "+6 hours" : "+6 часов", text: avoidPharmacoprophylaxis ? (isEn ? "Contraindicated" : "Противопоказано") : (isEn ? "Resume after catheter removal" : "Возобновление после удаления катетера") });
-                                }
+                                steps.push({ type: 'stop', time: isEn ? `-${fStop} hours` : `-${fStop} часов`, text: isEn ? "Discontinue drug" : "Отмена препарата" });
+                                steps.push({ type: 'surgery', time: "День 0", text: isEn ? "Puncture / Catheter Manipulation" : "Пункция / Удаление катетера" });
+                                steps.push({ type: 'resume', time: isEn ? "+6 hours" : "+6 часов", text: avoidPharmacoprophylaxis ? (isEn ? "Contraindicated" : "Противопоказано") : (isEn ? "Resume after catheter removal" : "Возобновление после удаления катетера") });
                             }
                             break;
                             
                         case 'ufh':
-                            let uResume = bmiExtreme ? ((isEn ? "High prophylactic dose: " : "Усиленные профил. дозы: ") + logic.ufhResume) : logic.ufhResume;
-                            steps.push({ type: 'stop', time: "-4...-6 часов", text: isEn ? "Stop IV infusion or SC administration" : "Прекращение в/в инфузии или п/к введения" });
-                            steps.push({ type: 'check', time: "До пункции / удаления", text: isEn ? "Strictly verify aPTT ≤ 45s" : "Строгий контроль АЧТВ ≤ 45 с" });
+                            let uResume = bmiExtreme ? ((isEn ? "High prophylactic dose: " : "Усиленные профил. дозы: ") + (isEn ? "≥ 1 hour after puncture or catheter removal." : "≥ 1 часа после пункции или извлечения катетера.")) : (isEn ? "≥ 1 hour after puncture or catheter removal." : "≥ 1 часа после пункции или извлечения катетера.");
+                            steps.push({ type: 'stop', time: "-4...-6 часов", text: isEn ? "Stop IV infusion" : "Остановка внутривенной инфузии" });
+                            steps.push({ type: 'check', time: "До пункции", text: isEn ? "Verify aPTT ≤ 45s" : "Обязательный контроль АЧТВ ≤ 45 с" });
                             steps.push({ type: 'surgery', time: "День 0", text: isEn ? "Puncture / Catheter Manipulation" : "Пункция / Удаление катетера" });
-                            steps.push({ type: 'resume', time: isEn ? "Post-op" : "После операции", text: avoidPharmacoprophylaxis ? (isEn ? "Contraindicated" : "Противопоказано") : uResume });
+                            steps.push({ type: 'resume', time: "≥ 1 час", text: avoidPharmacoprophylaxis ? (isEn ? "Contraindicated" : "Противопоказано") : uResume });
                             break;
                             
                         case 'aspirin':
-                            steps.push({ type: 'check', time: "Дозировка", text: isEn ? "≤ 200 mg: continue. > 200 mg: stop -3 days" : "≤ 200 мг: не отменять. > 200 мг: отмена за 3 суток" });
+                            steps.push({ type: 'check', time: "Дозировка", text: isEn ? "≤ 200 mg: continue. > 200 mg: stop -3 days" : "≤ 200 мг: продолжить. > 200 мг: отмена за 3 суток" });
                             steps.push({ type: 'surgery', time: "День 0", text: isEn ? "Puncture / Catheter Manipulation" : "Пункция / Удаление катетера" });
                             break;
                             
@@ -1050,22 +1113,17 @@
                             
                         case 'warfarin':
                             steps.push({ type: 'stop', time: "-5 дней", text: isEn ? "Stop Warfarin" : "Отмена варфарина" });
-                            if (needsBridge) {
-                                steps.push({ type: 'resume', time: "-3 дня", text: isEn ? "Start Bridge Therapy (LMWH/UFH therapeutic)" : "Старт мост-терапии (лечебные дозы НМГ/НФГ)" });
-                                steps.push({ type: 'stop', time: "-24 часа", text: isEn ? "Stop LMWH bridge" : "Остановка НМГ (мост)" });
-                            }
-                            steps.push({ type: 'check', time: "До пункции / удаления", text: isEn ? "Verify INR ≤ 1.5" : "Обязательный контроль МНО (≤ 1.5)" });
+                            steps.push({ type: 'check', time: "До пункции", text: isEn ? "Verify INR ≤ 1.5" : "Обязательный контроль МНО (≤ 1.5)" });
                             steps.push({ type: 'surgery', time: "День 0", text: isEn ? "Puncture / Catheter Manipulation" : "Пункция / Удаление катетера" });
-                            steps.push({ type: 'resume', time: "+24...72 ч", text: isEn ? "Resume Warfarin (+ bridging if indicated)" : "Возобновление Варфарина (+ мост-терапия до целевого МНО)" });
+                            steps.push({ type: 'resume', time: isEn ? "Post-op" : "После операции", text: isEn ? "Resume Warfarin" : "Возобновление варфарина" });
                             break;
                     }
                 }
 
-                // Render Timeline
-                this.ui.visualTimeline.innerHTML = this.buildTimelineHTML(steps);
+                if(this.ui.visualTimeline) this.ui.visualTimeline.innerHTML = this.buildTimelineHTML(steps);
                 lucide.createIcons();
 
-                this.ui.txtReversal.textContent = dict[revKey];
+                if(this.ui.txtReversal) this.ui.txtReversal.textContent = dict[revKey];
             },
 
             calculateScores(type) {
@@ -1086,7 +1144,7 @@
                 
                 // HAS-BLED
                 const hScore = this.state.hasbledScore;
-                this.ui.hasbledScoreVal.textContent = hScore;
+                if(this.ui.hasbledScoreVal) this.ui.hasbledScoreVal.textContent = hScore;
                 let hText = "";
                 let hColor = "text-rose-600";
                 if (hScore < 3) { 
@@ -1095,9 +1153,11 @@
                 } else { 
                     hText = isEn ? "High bleeding risk (≥3). Requires caution and modifiable risk factor management." : "Высокий риск геморрагических осложнений (≥3). Требует повышенной осторожности и коррекции модифицируемых факторов риска."; 
                 }
-                this.ui.hasbledResultText.textContent = hText;
-                this.ui.hasbledResultText.className = `text-sm font-semibold leading-relaxed ${hColor}`;
-                this.ui.hasbledScoreVal.className = `text-5xl font-bold leading-none ${hColor}`;
+                if(this.ui.hasbledResultText) {
+                    this.ui.hasbledResultText.textContent = hText;
+                    this.ui.hasbledResultText.className = `text-sm font-semibold leading-relaxed ${hColor}`;
+                }
+                if(this.ui.hasbledScoreVal) this.ui.hasbledScoreVal.className = `text-5xl font-bold leading-none ${hColor}`;
 
                 // VTE
                 const vteMode = this.state.vteMode;
@@ -1117,23 +1177,29 @@
                     else { vText = isEn ? "High risk. Pharmacoprophylaxis indicated." : "Высокий риск ВТЭО. Показана обязательная фармакологическая тромбопрофилактика."; vColor = "text-rose-600"; }
                 }
 
-                this.ui.vteScoreVal.textContent = vScore;
-                this.ui.vteScoreVal.className = `text-5xl font-bold leading-none ${vColor}`;
-                this.ui.vteResultText.textContent = vText;
-                this.ui.vteResultText.className = `text-sm font-semibold leading-relaxed ${vColor}`;
+                if(this.ui.vteScoreVal) {
+                    this.ui.vteScoreVal.textContent = vScore;
+                    this.ui.vteScoreVal.className = `text-5xl font-bold leading-none ${vColor}`;
+                }
+                if(this.ui.vteResultText) {
+                    this.ui.vteResultText.textContent = vText;
+                    this.ui.vteResultText.className = `text-sm font-semibold leading-relaxed ${vColor}`;
+                }
 
                 // CHA2DS2-VASc
                 const chScore = this.state.chadsScore;
-                this.ui.chadsScoreVal.textContent = chScore;
+                if(this.ui.chadsScoreVal) this.ui.chadsScoreVal.textContent = chScore;
                 let chText = "";
                 let chColor = "text-indigo-600";
                 if (chScore === 0) { chText = isEn ? "Low risk of thromboembolism." : "Низкий риск тромбоэмболических осложнений."; chColor = "text-emerald-600"; }
                 else if (chScore <= 4) { chText = isEn ? "Moderate risk. Bridge therapy not strictly required when stopping VKA." : "Умеренный риск. При отмене антагонистов витамина К проведение переходной (мост) терапии рутинно не требуется."; }
                 else { chText = isEn ? "High risk. Bridge therapy with therapeutic LMWH/UFH is required when stopping VKA." : "Высокий риск. При отмене антагонистов витамина К показано обязательное проведение переходной (мост) терапии лечебными дозами НМГ/НФГ."; chColor = "text-rose-600"; }
                 
-                this.ui.chadsResultText.textContent = chText;
-                this.ui.chadsResultText.className = `text-sm font-semibold leading-relaxed ${chColor}`;
-                this.ui.chadsScoreVal.className = `text-5xl font-bold leading-none ${chColor}`;
+                if(this.ui.chadsResultText) {
+                    this.ui.chadsResultText.textContent = chText;
+                    this.ui.chadsResultText.className = `text-sm font-semibold leading-relaxed ${chColor}`;
+                }
+                if(this.ui.chadsScoreVal) this.ui.chadsScoreVal.className = `text-5xl font-bold leading-none ${chColor}`;
             }
         };
 
