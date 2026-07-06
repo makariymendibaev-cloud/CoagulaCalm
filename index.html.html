@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoagulaCalm / Гемостаз Эксперт</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Glassmorphism iOS Style */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 40px -10px rgba(30, 58, 138, 0.08);
+        }
+        .glass-input {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(186, 230, 253, 0.8);
+            box-shadow: inset 0 2px 4px rgba(30, 58, 138, 0.02);
+            transition: all 0.2s ease;
+        }
+        .glass-input:focus {
+            background: rgba(255, 255, 255, 1);
+            border-color: rgba(14, 165, 233, 0.8);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+        }
+
+        .ios-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231e3a8a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+        }
+
+        /* Toggle Switches */
+        .ios-toggle:checked + div { background-color: #0ea5e9; }
+        .ios-toggle:checked + div:after { transform: translateX(100%); border-color: #fff; }
+        .ios-toggle:focus + div { box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.3); }
+
+        /* Tabs */
+        .tab-btn { transition: all 0.3s ease; }
+        .tab-btn.active {
+            background: #ffffff;
+            color: #1e3a8a;
+            box-shadow: 0 2px 10px rgba(30, 58, 138, 0.1);
+            font-weight: 600;
+        }
+        
+        .checkbox-row { transition: background 0.2s; }
+        .checkbox-row:hover { background: rgba(255,255,255,0.95); }
+        
+        /* Smooth Fade In */
+        .animate-fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(186, 230, 253, 1); border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-sky-50 via-blue-50/60 to-indigo-50 min-h-screen text-blue-950 flex flex-col items-center">
+
+    <div class="max-w-6xl w-full p-4 md:p-6 lg:p-8 flex-grow flex flex-col">
+        
+        <!-- Header -->
+        <header class="flex flex-col md:flex-row justify-between items-center mb-6 glass-panel rounded-3xl p-5 md:p-6 gap-4 w-full">
+            <div class="flex items-center gap-4 w-full md:w-auto">
+                <div class="bg-gradient-to-tr from-blue-600 to-sky-400 p-3.5 rounded-2xl text-white shadow-lg shadow-blue-600/20 shrink-0">
+                    <i data-lucide="activity" class="w-6 h-6"></i>
+                </div>
+                <div class="flex flex-col">
+                    <h1 class="text-xl md:text-2xl font-bold tracking-tight text-blue-950" id="t-appTitle">CoagulaCalm</h1>
+                    <p class="text-xs md:text-sm text-blue-800/70 font-medium" id="t-appSubtitle">Клиническая система поддержки принятия решений</p>
+                </div>
+            </div>
+
+            <!-- Language Toggle -->
+            <div class="flex items-center gap-3 font-semibold text-sm bg-white/60 p-2 rounded-full border border-sky-100/80 shrink-0 shadow-sm">
+                <span class="text-blue-900 transition-opacity ml-2" id="lbl-ru">RU</span>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="langToggle" class="sr-only ios-toggle">
+                    <div class="w-11 h-6 bg-sky-200 rounded-full transition-colors duration-300 ease-in-out after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-transform after:shadow-sm"></div>
+                </label>
+                <span class="text-blue-900/40 transition-opacity mr-2" id="lbl-en">EN</span>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="flex flex-col md:flex-row p-1.5 mb-6 bg-white/50 rounded-3xl md:rounded-full backdrop-blur-md border border-sky-100 shadow-sm w-full gap-1 md:gap-0">
+            <button class="tab-btn active flex-1 px-4 py-3 md:py-2.5 text-sm md:text-base rounded-2xl md:rounded-full text-blue-800 font-medium" data-tab="perioperative" id="t-tabPeri">Регионарная анестезия</button>
+            <button class="tab-btn flex-1 px-4 py-3 md:py-2.5 text-sm md:text-base rounded-2xl md:rounded-full text-blue-800 font-medium" data-tab="vte" id="t-tabVTE">Риск ВТЭО (Шкалы)</button>
+            <button class="tab-btn flex-1 px-4 py-3 md:py-2.5 text-sm md:text-base rounded-2xl md:rounded-full text-blue-800 font-medium" data-tab="bleeding" id="t-tabBleeding">HAS-BLED</button>
+            <button class="tab-btn flex-1 px-4 py-3 md:py-2.5 text-sm md:text-base rounded-2xl md:rounded-full text-blue-800 font-medium" data-tab="chads" id="t-tabChads">CHA₂DS₂-VASc</button>
+        </nav>
+
+        <!-- TAB 1: PERIOPERATIVE MANAGEMENT -->
+        <main id="tab-perioperative" class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 w-full animate-fade-in flex-grow">
+            <!-- Parameters -->
+            <section class="glass-panel rounded-3xl p-6 lg:p-8 flex flex-col gap-5 lg:col-span-5 h-fit">
+                <h2 class="text-lg font-bold flex items-center gap-2 text-blue-900 border-b border-sky-100 pb-3" id="t-inputTitle">
+                    <i data-lucide="sliders-horizontal" class="w-5 h-5 text-sky-500"></i> Клинические параметры
+                </h2>
+
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-xs font-bold text-blue-900/60 uppercase tracking-wider ml-1" id="t-lblBlockade">Вид регионарной анестезии</label>
+                    <select id="selBlockade" class="ios-select glass-input text-blue-950 rounded-2xl p-3.5 font-medium cursor-pointer">
+                        <option value="deep" id="t-optDeep">Глубокая блокада (нейроаксиальная, плексусная)</option>
+                        <option value="superficial" id="t-optSuper">Поверхностная блокада</option>
+                    </select>
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-xs font-bold text-blue-900/60 uppercase tracking-wider ml-1" id="t-lblGroup">Группа препаратов</label>
+                    <select id="selGroup" class="ios-select glass-input text-blue-950 rounded-2xl p-3.5 font-medium cursor-pointer">
+                        <option value="doac" id="t-optDoac">Прямые пероральные антикоагулянты (ПОАК)</option>
+                        <option value="parenteral" id="t-optParenteral">Парентеральные антикоагулянты (НМГ, НФГ)</option>
+                        <option value="antiplatelet" id="t-optAntiplatelet">Антиагрегантные препараты</option>
+                        <option value="warfarin" id="t-optWarfarin">Антагонисты витамина К (Варфарин)</option>
+                    </select>
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-xs font-bold text-blue-900/60 uppercase tracking-wider ml-1" id="t-lblDrug">Фармакологический препарат</label>
+                    <select id="selDrug" class="ios-select glass-input text-blue-950 rounded-2xl p-3.5 font-medium cursor-pointer"></select>
+                </div>
+
+                <div class="flex flex-col gap-1.5 transition-all duration-300" id="wrapDose">
+                    <label class="text-xs font-bold text-blue-900/60 uppercase tracking-wider ml-1" id="t-lblDose">Режим дозирования</label>
+                    <select id="selDose" class="ios-select glass-input text-blue-950 rounded-2xl p-3.5 font-medium cursor-pointer">
+                        <option value="low" id="t-optLow">Профилактическая доза</option>
+                        <option value="high" id="t-optHigh">Терапевтическая (лечебная) доза</option>
+                    </select>
+                </div>
+
+                <div class="flex flex-col gap-1.5 transition-all duration-300" id="wrapGfr">
+                    <label class="text-xs font-bold text-blue-900/60 uppercase tracking-wider ml-1" id="t-lblGfr">Функция почек (СКФ мл/мин)</label>
+                    <select id="selGfr" class="ios-select glass-input text-blue-950 rounded-2xl p-3.5 font-medium cursor-pointer">
+                        <option value="normal" id="t-optGfrNormal">Нормальная (≥ 80)</option>
+                        <option value="mild" id="t-optGfrMild">Сниженная (50 - 79)</option>
+                        <option value="moderate" id="t-optGfrMod">Умеренно сниженная (30 - 49)</option>
+                        <option value="severe" id="t-optGfrSev">Тяжелая почечная дисфункция (< 30)</option>
+                    </select>
+                </div>
+
+                <!-- Toggles -->
+                <div class="space-y-3 pt-2">
+                    <div class="hidden items-center justify-between bg-white/60 border border-sky-100 p-4 rounded-2xl" id="wrapAggregation">
+                        <div class="flex flex-col pr-4">
+                            <span class="text-sm font-semibold text-blue-950" id="t-lblAggrTitle">Агрегатограмма тромбоцитов</span>
+                            <span class="text-xs text-blue-800/60 mt-0.5" id="t-lblAggrDesc">Инструментально подтвержденная нормоагрегация</span>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer shrink-0">
+                            <input type="checkbox" id="chkAggregation" class="sr-only ios-toggle">
+                            <div class="w-12 h-7 bg-sky-200 rounded-full after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-transform"></div>
+                        </label>
+                    </div>
+
+                    <div class="hidden items-center justify-between bg-white/60 border border-sky-100 p-4 rounded-2xl" id="wrapTrauma">
+                        <div class="flex flex-col pr-4">
+                            <span class="text-sm font-semibold text-blue-950" id="t-lblTraumaTitle">Травматичная пункция</span>
+                            <span class="text-xs text-blue-800/60 mt-0.5" id="t-lblTraumaDesc">Примесь крови при выполнении манипуляции</span>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer shrink-0">
+                            <input type="checkbox" id="chkTrauma" class="sr-only ios-toggle">
+                            <div class="w-12 h-7 bg-sky-200 rounded-full after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-6 after:w-6 after:transition-transform"></div>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Outputs -->
+            <section class="flex flex-col gap-6 lg:col-span-7 h-full w-full">
+                <!-- Timeline Card -->
+                <div class="glass-panel rounded-3xl p-6 lg:p-8 relative overflow-hidden flex-grow">
+                    <div class="absolute -right-20 -top-20 w-64 h-64 bg-sky-300/10 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-indigo-300/10 rounded-full blur-3xl pointer-events-none"></div>
+                    
+                    <h2 class="text-lg font-bold flex items-center gap-2 mb-6 text-blue-900 z-10 relative" id="t-resTitle">
+                        <i data-lucide="git-merge" class="w-5 h-5 text-indigo-500"></i> Алгоритм периоперационного ведения
+                    </h2>
+                    
+                    <div class="relative border-l-2 border-sky-200 ml-4 md:ml-6 space-y-7 z-10" id="visualTimeline">
+                        <!-- Injected via JS -->
+                    </div>
+
+                    <!-- Clinical Notes Container -->
+                    <div id="clinicalNotesContainer" class="mt-8 flex flex-col gap-3 z-10 relative">
+                        <!-- DOAC Thresholds & Reversal Warnings -->
+                        <div id="doacNote" class="hidden bg-indigo-50/70 border border-indigo-100 p-4 rounded-2xl flex items-start gap-3">
+                            <i data-lucide="info" class="w-5 h-5 text-indigo-500 shrink-0 mt-0.5"></i>
+                            <div class="flex flex-col gap-2">
+                                <p class="text-xs font-medium text-indigo-900/90 leading-relaxed" id="t-doacNote1">Остаточная концентрация ПОАК в плазме < 30 нг/мл или анти-Ха активность ≤ 0.1 МЕ/мл считается приемлемой для выполнения глубокой блокады.[cite: 2]</p>
+                                <p class="text-xs font-medium text-indigo-900/90 leading-relaxed" id="t-doacNote2">Использование специфических антидотов или КПК для обеспечения возможности выполнения блокады у рутинных пациентов строго не рекомендуется.[cite: 2]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emergency Reversal -->
+                <div class="glass-panel rounded-3xl p-6 lg:p-8 relative">
+                    <h2 class="text-lg font-bold flex items-center gap-2 mb-2 text-rose-700" id="t-revTitle">
+                        <i data-lucide="activity" class="w-5 h-5 text-rose-500"></i> Протокол экстренной реверсии
+                    </h2>
+                    <p class="text-xs font-semibold text-rose-800/60 uppercase tracking-wide mb-3" id="t-revSubtitle">
+                        При развитии жизнеугрожающего кровотечения:
+                    </p>
+                    <div class="bg-rose-50/50 rounded-2xl p-4 border border-rose-100/50">
+                        <p id="txtReversal" class="text-sm md:text-base font-semibold text-rose-900 leading-relaxed transition-all">-</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- TAB 2: VTE RISK (Caprini/Padua) -->
+        <main id="tab-vte" class="hidden grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 w-full animate-fade-in flex-grow">
+            <section class="glass-panel rounded-3xl p-6 lg:p-8 flex flex-col gap-4 lg:col-span-8 overflow-y-auto max-h-[70vh]">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-sky-100 pb-4 gap-3">
+                    <h2 class="text-lg font-bold text-blue-900 flex items-center gap-2" id="t-vteTitle">
+                        <i data-lucide="list-checks" class="w-5 h-5 text-sky-500"></i> Оценка риска ВТЭО
+                    </h2>
+                    <div class="flex bg-sky-100/50 rounded-xl p-1 w-full sm:w-auto">
+                        <button class="flex-1 px-3 py-1.5 text-xs font-semibold rounded-lg bg-white text-sky-700 shadow-sm transition-all" id="btnCaprini">Caprini (Хирургия)</button>
+                        <button class="flex-1 px-3 py-1.5 text-xs font-medium rounded-lg text-sky-600/70 hover:text-sky-700 transition-all" id="btnPadua">Padua (Терапия)</button>
+                    </div>
+                </div>
+                <div id="capriniForm" class="flex flex-col gap-4"></div>
+                <div id="paduaForm" class="hidden flex-col gap-2"></div>
+            </section>
+            <section class="lg:col-span-4">
+                <div class="glass-panel rounded-3xl p-6 lg:p-8 sticky top-6">
+                    <h2 class="text-xs font-bold text-blue-900/60 uppercase tracking-wider mb-2" id="t-scoreTitleVTE">Сумма баллов</h2>
+                    <div class="flex items-end gap-2 mb-6">
+                        <span id="vteScoreVal" class="text-5xl font-bold text-sky-600 leading-none">0</span>
+                    </div>
+                    <div class="bg-white/80 rounded-2xl p-5 border shadow-sm">
+                        <span class="text-xs font-bold uppercase tracking-wider text-blue-900/50 block mb-2" id="t-vteResLabel">Клиническая стратегия</span>
+                        <p id="vteResultText" class="text-sm font-semibold leading-relaxed text-blue-900">-</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- TAB 3: HAS-BLED -->
+        <main id="tab-bleeding" class="hidden grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 w-full animate-fade-in flex-grow">
+            <section class="glass-panel rounded-3xl p-6 lg:p-8 flex flex-col gap-4 lg:col-span-8 overflow-y-auto max-h-[70vh]">
+                <h2 class="text-lg font-bold text-blue-900 border-b border-rose-100 pb-4 flex items-center gap-2" id="t-hasbledTitle">
+                    <i data-lucide="droplet" class="w-5 h-5 text-rose-500"></i> Риск геморрагических осложнений (HAS-BLED)
+                </h2>
+                <div id="hasbledForm" class="flex flex-col gap-2"></div>
+            </section>
+            <section class="lg:col-span-4">
+                <div class="glass-panel rounded-3xl p-6 lg:p-8 sticky top-6">
+                    <h2 class="text-xs font-bold text-blue-900/60 uppercase tracking-wider mb-2" id="t-hasbledScoreTitle">Сумма баллов</h2>
+                    <div class="flex items-end gap-2 mb-6">
+                        <span id="hasbledScoreVal" class="text-5xl font-bold text-rose-600 leading-none">0</span>
+                    </div>
+                    <div class="bg-white/80 rounded-2xl p-5 border shadow-sm">
+                        <span class="text-xs font-bold uppercase tracking-wider text-blue-900/50 block mb-2" id="t-hasbledResLabel">Интерпретация риска</span>
+                        <p id="hasbledResultText" class="text-sm font-semibold leading-relaxed text-blue-900">-</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- TAB 4: CHA2DS2-VASc -->
+        <main id="tab-chads" class="hidden grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 w-full animate-fade-in flex-grow">
+            <section class="glass-panel rounded-3xl p-6 lg:p-8 flex flex-col gap-4 lg:col-span-8 overflow-y-auto max-h-[70vh]">
+                <h2 class="text-lg font-bold text-blue-900 border-b border-indigo-100 pb-4 flex items-center gap-2" id="t-chadsTitle">
+                    <i data-lucide="heart-pulse" class="w-5 h-5 text-indigo-500"></i> Риск тромбоэмболии (CHA₂DS₂-VASc)
+                </h2>
+                <div id="chadsForm" class="flex flex-col gap-2"></div>
+            </section>
+            <section class="lg:col-span-4">
+                <div class="glass-panel rounded-3xl p-6 lg:p-8 sticky top-6">
+                    <h2 class="text-xs font-bold text-blue-900/60 uppercase tracking-wider mb-2" id="t-chadsScoreTitle">Сумма баллов</h2>
+                    <div class="flex items-end gap-2 mb-6">
+                        <span id="chadsScoreVal" class="text-5xl font-bold text-indigo-600 leading-none">0</span>
+                    </div>
+                    <div class="bg-white/80 rounded-2xl p-5 border shadow-sm">
+                        <span class="text-xs font-bold uppercase tracking-wider text-blue-900/50 block mb-2" id="t-chadsResLabel">Показания к мост-терапии</span>
+                        <p id="chadsResultText" class="text-sm font-semibold leading-relaxed text-blue-900">-</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="mt-8 pt-6 w-full">
+            <div class="glass-panel rounded-3xl p-6 md:p-8 text-center max-w-4xl mx-auto flex flex-col items-center gap-4">
+                <div class="flex flex-col items-center">
+                    <h3 class="font-bold text-blue-950 text-sm md:text-base" id="t-creator">Создатель: Мендибаев Макарий Сергеевич</h3>
+                    <p class="text-xs md:text-sm font-medium text-blue-900/70" id="t-workplace">ГБУЗ ГКБ им. В.П. Демихова ДЗМ. Врач анестезиолог-реаниматолог.</p>
+                </div>
+                
+                <button id="copyEmailBtn" class="inline-flex items-center gap-2 px-5 py-2.5 bg-sky-100 hover:bg-sky-200 text-sky-800 rounded-full font-semibold transition-all duration-300 shadow-sm focus:outline-none">
+                    <span id="emailIconWrap"><i data-lucide="mail" class="w-4 h-4"></i></span>
+                    <span id="emailText" class="text-sm tracking-wide">makariy.mendibaev@yandex.ru</span>
+                </button>
+
+                <div class="mt-2 w-full text-left bg-rose-50/60 p-4 md:p-5 rounded-2xl flex items-start gap-3 border border-rose-100/50">
+                    <i data-lucide="alert-circle" class="w-5 h-5 text-rose-500 shrink-0 mt-0.5"></i>
+                    <div>
+                        <p class="text-xs font-bold text-rose-800 uppercase tracking-wider mb-1" id="t-disclaimerTitle">Клиническое предостережение</p>
+                        <p class="text-[11px] md:text-xs font-medium text-rose-900/80 leading-relaxed" id="t-disclaimerText">Система носит информационно-справочный характер и разработана для поддержки принятия врачебных решений. Приложение не заменяет клиническое мышление, консилиум и официальные инструкции к лекарственным средствам. Окончательное решение о периоперационной тактике принимается лечащим врачом с учетом индивидуального соотношения рисков и пользы для пациента.</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        const ExpertApp = {
+            lang: 'ru',
+            ui: {},
+            state: {
+                activeTab: 'perioperative',
+                vteMode: 'caprini', 
+                blockade: 'deep',
+                group: 'doac',
+                drug: 'rivaroxaban',
+                dose: 'low',
+                gfr: 'normal',
+                aggregationNormal: false,
+                traumaticTap: false,
+                capriniScore: 0,
+                paduaScore: 0,
+                hasbledScore: 0,
+                chadsScore: 0
+            },
+            
+            drugs: {
+                doac: ['rivaroxaban', 'apixaban', 'dabigatran'],
+                parenteral: ['lmwh', 'fondaparinux', 'ufh'],
+                antiplatelet: ['aspirin', 'ticagrelor', 'clopidogrel', 'prasugrel'],
+                warfarin: ['warfarin']
+            },
+
+            calcData: {
+                caprini: [
+                    { pts: 1, items: [
+                        { id: 'c1_1', ru: 'Возраст 41-60 лет', en: 'Age 41-60 years' },
+                        { id: 'c1_2', ru: 'Малая операция', en: 'Minor surgery' },
+                        { id: 'c1_3', ru: 'ИМТ > 25 кг/м²', en: 'BMI > 25 kg/m²' },
+                        { id: 'c1_4', ru: 'Отек нижних конечностей', en: 'Swollen legs' },
+                        { id: 'c1_5', ru: 'Варикозное расширение вен', en: 'Varicose veins' },
+                        { id: 'c1_6', ru: 'Беременность или послеродовый период', en: 'Pregnancy or postpartum' },
+                        { id: 'c1_7', ru: 'Невынашивание беременности в анамнезе', en: 'History of unexplained abortion' },
+                        { id: 'c1_8', ru: 'Прием эстрогенов/гестагенов', en: 'Oral contraceptives or HRT' },
+                        { id: 'c1_9', ru: 'Сепсис (< 1 мес)', en: 'Sepsis (< 1 month)' },
+                        { id: 'c1_10', ru: 'Тяжелое заболевание легких/пневмония (< 1 мес)', en: 'Serious lung disease/pneumonia (< 1 month)' },
+                        { id: 'c1_11', ru: 'Острый инфаркт миокарда', en: 'Acute myocardial infarction' },
+                        { id: 'c1_12', ru: 'Застойная сердечная недостаточность (< 1 мес)', en: 'Congestive heart failure (< 1 month)' },
+                        { id: 'c1_13', ru: 'Воспалительное заболевание кишечника в анамнезе', en: 'History of inflammatory bowel disease' },
+                        { id: 'c1_14', ru: 'Терапевтический пациент на постельном режиме < 3 дней', en: 'Medical patient at bed rest < 3 days' }
+                    ]},
+                    { pts: 2, items: [
+                        { id: 'c2_1', ru: 'Возраст 61-74 года', en: 'Age 61-74 years' },
+                        { id: 'c2_2', ru: 'Артроскопическая операция', en: 'Arthroscopic surgery' },
+                        { id: 'c2_3', ru: 'Большая открытая операция (> 45 мин)', en: 'Major open surgery (> 45 min)' },
+                        { id: 'c2_4', ru: 'Лапароскопическая операция (> 45 мин)', en: 'Laparoscopic surgery (> 45 min)' },
+                        { id: 'c2_5', ru: 'Злокачественное новообразование', en: 'Malignancy' },
+                        { id: 'c2_6', ru: 'Постельный режим (> 3 суток)', en: 'Bed rest (> 3 days)' },
+                        { id: 'c2_7', ru: 'Гипсовая повязка', en: 'Immobilizing plaster cast' },
+                        { id: 'c2_8', ru: 'Катетер в центральной вене', en: 'Central venous access' }
+                    ]},
+                    { pts: 3, items: [
+                        { id: 'c3_1', ru: 'Возраст > 74 лет', en: 'Age > 74 years' },
+                        { id: 'c3_2', ru: 'Анамнез ВТЭО', en: 'History of VTE' },
+                        { id: 'c3_3', ru: 'Семейный анамнез ВТЭО', en: 'Family history of VTE' },
+                        { id: 'c3_4', ru: 'Лейденская мутация', en: 'Factor V Leiden' },
+                        { id: 'c3_5', ru: 'Мутация в гене протромбина', en: 'Prothrombin gene mutation' },
+                        { id: 'c3_6', ru: 'Волчаночный антикоагулянт', en: 'Lupus anticoagulant' },
+                        { id: 'c3_7', ru: 'Антитела к кардиолипину', en: 'Anticardiolipin antibodies' },
+                        { id: 'c3_8', ru: 'Повышение уровня гомоцистеина', en: 'Elevated serum homocysteine' },
+                        { id: 'c3_9', ru: 'Гепарининдуцированная тромбоцитопения', en: 'Heparin-induced thrombocytopenia' },
+                        { id: 'c3_10', ru: 'Другие тромбофилии', en: 'Other congenital or acquired thrombophilia' }
+                    ]},
+                    { pts: 4, items: [
+                        { id: 'c4_1', ru: 'Инсульт (< 1 мес назад)', en: 'Stroke (< 1 month)' },
+                        { id: 'c4_2', ru: 'Замена крупного сустава', en: 'Elective major lower extremity arthroplasty' },
+                        { id: 'c4_3', ru: 'Перелом бедра, костей таза, голени', en: 'Hip, pelvis, or leg fracture' },
+                        { id: 'c4_4', ru: 'Травма спинного мозга (< 1 мес)', en: 'Acute spinal cord injury (< 1 month)' }
+                    ]}
+                ],
+                padua: [
+                    { id: 'p1', pts: 3, ru: 'Активный рак', en: 'Active cancer' },
+                    { id: 'p2', pts: 3, ru: 'ВТЭО в анамнезе', en: 'Prior VTE' },
+                    { id: 'p3', pts: 3, ru: 'Ограничение подвижности (> 3 дней)', en: 'Reduced mobility (> 3 days)' },
+                    { id: 'p4', pts: 3, ru: 'Тромбофилия', en: 'Thrombophilia' },
+                    { id: 'p5', pts: 2, ru: 'Недавняя травма/операция (≤ 1 мес)', en: 'Recent trauma/surgery (≤ 1 month)' },
+                    { id: 'p6', pts: 1, ru: 'Возраст ≥ 70 лет', en: 'Age ≥ 70 years' },
+                    { id: 'p7', pts: 1, ru: 'Сердечная/дыхательная недостаточность', en: 'Heart or respiratory failure' },
+                    { id: 'p8', pts: 1, ru: 'Острый ИМ или ишемический инсульт', en: 'Acute MI or ischemic stroke' },
+                    { id: 'p9', pts: 1, ru: 'Острая инфекция / ревматологическое заболевание', en: 'Acute infection / rheumatologic disorder' },
+                    { id: 'p10', pts: 1, ru: 'Ожирение (ИМТ > 30)', en: 'Obesity (BMI > 30)' },
+                    { id: 'p11', pts: 1, ru: 'Гормональная терапия', en: 'Hormonal therapy' }
+                ],
+                hasbled: [
+                    { id: 'h1', pts: 1, ru: 'H - Неконтролируемая АГ (САД > 160)', en: 'H - Uncontrolled Hypertension (SBP > 160)' },
+                    { id: 'h2', pts: 1, ru: 'A - Нарушение функции почек', en: 'A - Abnormal renal function' },
+                    { id: 'h3', pts: 1, ru: 'A - Нарушение функции печени', en: 'A - Abnormal liver function' },
+                    { id: 'h4', pts: 1, ru: 'S - Инсульт в анамнезе', en: 'S - Prior stroke' },
+                    { id: 'h5', pts: 1, ru: 'B - Кровотечение в анамнезе/предрасположенность', en: 'B - Bleeding history or predisposition' },
+                    { id: 'h6', pts: 1, ru: 'L - Лабильное МНО', en: 'L - Labile INRs' },
+                    { id: 'h7', pts: 1, ru: 'E - Пожилой возраст (> 65 лет)', en: 'E - Elderly (> 65 years)' },
+                    { id: 'h8', pts: 1, ru: 'D - Прием НПВС/антиагрегантов', en: 'D - Drugs (NSAIDs/Antiplatelets)' },
+                    { id: 'h9', pts: 1, ru: 'D - Чрезмерное употребление алкоголя', en: 'D - Alcohol excess' }
+                ],
+                chads: [
+                    { id: 'ch1', pts: 1, ru: 'C - Застойная сердечная недостаточность', en: 'C - Congestive heart failure' },
+                    { id: 'ch2', pts: 1, ru: 'H - Артериальная гипертензия', en: 'H - Hypertension' },
+                    { id: 'ch3', pts: 2, ru: 'A₂ - Возраст ≥ 75 лет', en: 'A₂ - Age ≥ 75 years' },
+                    { id: 'ch4', pts: 1, ru: 'D - Сахарный диабет', en: 'D - Diabetes mellitus' },
+                    { id: 'ch5', pts: 2, ru: 'S₂ - Инсульт / ТИА / Тромбоэмболия в анамнезе', en: 'S₂ - Stroke / TIA / Thromboembolism' },
+                    { id: 'ch6', pts: 1, ru: 'V - Поражение сосудов (ИМ, атеросклероз)', en: 'V - Vascular disease' },
+                    { id: 'ch7', pts: 1, ru: 'A - Возраст 65–74 года', en: 'A - Age 65–74 years' },
+                    { id: 'ch8', pts: 1, ru: 'Sc - Женский пол', en: 'Sc - Sex category (female)' }
+                ]
+            },
+
+            i18n: {
+                ru: {
+                    t_appTitle: "CoagulaCalm",
+                    t_appSubtitle: "Клиническая система поддержки принятия решений",
+                    t_tabPeri: "Регионарная анестезия",
+                    t_tabVTE: "Риск ВТЭО",
+                    t_tabBleeding: "HAS-BLED",
+                    t_tabChads: "CHA₂DS₂-VASc",
+                    
+                    t_inputTitle: "Клинические параметры",
+                    t_lblBlockade: "Вид регионарной анестезии",
+                    t_optDeep: "Глубокая (нейроаксиальная, плексусная, глубокая фасциальная)",
+                    t_optSuper: "Поверхностная (поверхностная фасциальная, подкожная)",
+                    t_lblGroup: "Группа антитромботических средств",
+                    t_optDoac: "Прямые пероральные антикоагулянты (ПОАК)",
+                    t_optParenteral: "Парентеральные антикоагулянты (НМГ, НФГ)",
+                    t_optAntiplatelet: "Антиагрегантные препараты",
+                    t_optWarfarin: "Антагонисты витамина К (Варфарин)",
+                    t_lblDrug: "Фармакологический препарат",
+                    t_lblDose: "Режим дозирования",
+                    t_optLow: "Профилактическая доза",
+                    t_optHigh: "Терапевтическая (лечебная) доза",
+                    t_lblGfr: "Функция почек (СКФ мл/мин)",
+                    t_optGfrNormal: "Нормальная (≥ 80)",
+                    t_optGfrMild: "Сниженная (50 - 79)",
+                    t_optGfrMod: "Умеренно сниженная (30 - 49)",
+                    t_optGfrSev: "Тяжелая почечная дисфункция (< 30)",
+                    
+                    t_lblAggrTitle: "Агрегатограмма тромбоцитов",
+                    t_lblAggrDesc: "Инструментально подтвержденная нормоагрегация",
+                    t_lblTraumaTitle: "Травматичная манипуляция",
+                    t_lblTraumaDesc: "Примесь крови при выполнении пункции/катетеризации",
+                    
+                    t_resTitle: "Алгоритм периоперационного ведения",
+                    t_doacNote1: "Остаточная концентрация ПОАК в плазме < 30 нг/мл или анти-Ха активность ≤ 0.1 МЕ/мл считается приемлемой для выполнения глубокой блокады.[cite: 2]",
+                    t_doacNote2: "Использование специфических антидотов или КПК для обеспечения возможности выполнения блокады у рутинных пациентов строго не рекомендуется.[cite: 2]",
+                    
+                    t_revTitle: "Протокол экстренной реверсии",
+                    t_revSubtitle: "При развитии жизнеугрожающего кровотечения:",
+                    
+                    t_vteTitle: "Оценка риска ВТЭО",
+                    t_scoreTitleVTE: "Сумма баллов",
+                    t_vteResLabel: "Клиническая стратегия",
+                    t_hasbledTitle: "Риск геморрагических осложнений (HAS-BLED)",
+                    t_hasbledScoreTitle: "Сумма баллов",
+                    t_hasbledResLabel: "Интерпретация риска",
+                    t_chadsTitle: "Риск тромбоэмболии (CHA₂DS₂-VASc)",
+                    t_chadsScoreTitle: "Сумма баллов",
+                    t_chadsResLabel: "Показания к мост-терапии",
+                    
+                    t_creator: "Создатель: Мендибаев Макарий Сергеевич",
+                    t_workplace: "ГБУЗ ГКБ им. В.П. Демихова ДЗМ. Врач анестезиолог-реаниматолог.",
+                    t_disclaimerTitle: "Клиническое предостережение",
+                    t_disclaimerText: "Система носит информационно-справочный характер и разработана для поддержки принятия врачебных решений. Приложение не заменяет клиническое мышление, консилиум и официальные инструкции к лекарственным средствам. Окончательное решение о периоперационной тактике принимается лечащим врачом с учетом индивидуального соотношения рисков и пользы для пациента.",
+                    t_copied: "Скопировано!",
+                    
+                    d_rivaroxaban: "Ривароксабан",
+                    d_apixaban: "Апиксабан",
+                    d_dabigatran: "Дабигатран",
+                    d_lmwh: "НМГ (эноксапарин и аналоги)",
+                    d_fondaparinux: "Фондапаринукс натрия",
+                    d_ufh: "НФГ (нефракционированный гепарин)",
+                    d_aspirin: "Ацетилсалициловая кислота",
+                    d_ticagrelor: "Тикагрелор",
+                    d_clopidogrel: "Клопидогрел",
+                    d_prasugrel: "Прасугрел",
+                    d_warfarin: "Варфарин",
+
+                    tl_stop_proc: "Выполнение пункции и манипуляций разрешено без отмены терапии",
+                    tl_resume_proc: "Терапия продолжается в плановом режиме",
+                    tl_stop_aggr: "При нормоагрегации отмена препарата не требуется",
+                    
+                    rev_pcc_tran: "Концентрат протромбинового комплекса (КПК) 50 МЕ/кг в комбинации с транексамовой кислотой 15 мг/кг. СЗП неэффективна.[cite: 2]",
+                    rev_dab: "Специфический антидот — Идаруцизумаб 5 г в/в. Альтернатива: КПК 50 МЕ/кг + Транексамовая кислота.[cite: 2]",
+                    rev_warf: "Концентрат протромбинового комплекса (КПК) 30–50 МЕ/кг в комбинации с фитоменадионом (Витамин К1) в/в.[cite: 2]",
+                    rev_anti: "Трансфузия тромбоцитарного концентрата + Транексамовая кислота + рекомбинантный активированный фактор VII (rFVIIa).[cite: 2]",
+                    rev_lmwh: "Протамина сульфат (нейтрализует анти-Ха активность макс. на 50%). При рефрактерном кровотечении: КПК.[cite: 2]",
+                    rev_ufh: "Протамина сульфат (в/в медленно: 1 мг на 100 МЕ НФГ, введенного за последние 2-3 часа).[cite: 2]",
+                    rev_none: "Специфические антидоты не требуются."
+                },
+                en: {
+                    t_appTitle: "CoagulaCalm",
+                    t_appSubtitle: "Clinical Decision Support System",
+                    t_tabPeri: "Regional Anesthesia",
+                    t_tabVTE: "VTE Risk",
+                    t_tabBleeding: "HAS-BLED",
+                    t_tabChads: "CHA₂DS₂-VASc",
+                    
+                    t_inputTitle: "Clinical Parameters",
+                    t_lblBlockade: "Regional Anesthesia Type",
+                    t_optDeep: "Deep Block (Neuraxial, Plexus, Deep Fascial)",
+                    t_optSuper: "Superficial Block (Fascial, Subcutaneous)",
+                    t_lblGroup: "Antithrombotic Class",
+                    t_optDoac: "Direct Oral Anticoagulants (DOAC)",
+                    t_optParenteral: "Parenteral Anticoagulants (LMWH, UFH)",
+                    t_optAntiplatelet: "Antiplatelet Agents",
+                    t_optWarfarin: "Vitamin K Antagonists (Warfarin)",
+                    t_lblDrug: "Specific Agent",
+                    t_lblDose: "Dosage Regimen",
+                    t_optLow: "Prophylactic Dose",
+                    t_optHigh: "Therapeutic Dose",
+                    t_lblGfr: "Renal Function (GFR ml/min)",
+                    t_optGfrNormal: "Normal (≥ 80)",
+                    t_optGfrMild: "Mild Impairment (50 - 79)",
+                    t_optGfrMod: "Moderate Impairment (30 - 49)",
+                    t_optGfrSev: "Severe Dysfunction (< 30)",
+                    
+                    t_lblAggrTitle: "Platelet Aggregation",
+                    t_lblAggrDesc: "Instrumentally confirmed normal aggregation",
+                    t_lblTraumaTitle: "Traumatic Puncture",
+                    t_lblTraumaDesc: "Presence of blood during needle/catheter placement",
+                    
+                    t_resTitle: "Perioperative Management Algorithm",
+                    t_doacNote1: "Residual DOAC plasma concentration < 30 ng/mL or anti-Xa activity ≤ 0.1 IU/mL is considered acceptable for deep blockade.[cite: 2]",
+                    t_doacNote2: "The use of specific antidotes or PCC for the sole purpose of enabling neuraxial block in routine patients is strictly not recommended.[cite: 2]",
+                    
+                    t_revTitle: "Emergency Reversal Protocol",
+                    t_revSubtitle: "For life-threatening hemorrhage:",
+                    
+                    t_vteTitle: "VTE Risk Assessment",
+                    t_scoreTitleVTE: "Total Score",
+                    t_vteResLabel: "Clinical Strategy",
+                    t_hasbledTitle: "Hemorrhagic Risk (HAS-BLED)",
+                    t_hasbledScoreTitle: "Total Score",
+                    t_hasbledResLabel: "Risk Interpretation",
+                    t_chadsTitle: "Thromboembolic Risk (CHA₂DS₂-VASc)",
+                    t_chadsScoreTitle: "Total Score",
+                    t_chadsResLabel: "Bridging Indication",
+                    
+                    t_creator: "Creator: Makariy S. Mendibaev",
+                    t_workplace: "V.P. Demikhov City Clinical Hospital. Anesthesiologist-Intensivist.",
+                    t_disclaimerTitle: "Clinical Disclaimer",
+                    t_disclaimerText: "This application is a clinical decision support tool. It does not replace clinical judgment, multidisciplinary consultation, or official drug monographs. The final decision rests with the attending physician based on individual patient characteristics.",
+                    t_copied: "Copied!",
+                    
+                    d_rivaroxaban: "Rivaroxaban",
+                    d_apixaban: "Apixaban",
+                    d_dabigatran: "Dabigatran",
+                    d_lmwh: "LMWH (Enoxaparin, etc.)",
+                    d_fondaparinux: "Fondaparinux Sodium",
+                    d_ufh: "Unfractionated Heparin (UFH)",
+                    d_aspirin: "Acetylsalicylic Acid (Aspirin)",
+                    d_ticagrelor: "Ticagrelor",
+                    d_clopidogrel: "Clopidogrel",
+                    d_prasugrel: "Prasugrel",
+                    d_warfarin: "Warfarin",
+
+                    tl_stop_proc: "Puncture and manipulations are permitted without discontinuation",
+                    tl_resume_proc: "Therapy continues without interruption",
+                    tl_stop_aggr: "Discontinuation is not required given normal aggregation",
+
+                    rev_pcc_tran: "Prothrombin Complex Concentrate (PCC) 50 IU/kg + Tranexamic acid 15 mg/kg. FFP is ineffective.[cite: 2]",
+                    rev_dab: "Specific antidote — Idarucizumab 5g IV. Alternative: PCC 50 IU/kg + Tranexamic acid.[cite: 2]",
+                    rev_warf: "Prothrombin Complex Concentrate (PCC) 30-50 IU/kg + IV Phytomenadione (Vitamin K1).[cite: 2]",
+                    rev_anti: "Platelet concentrate transfusion + Tranexamic acid + recombinant activated factor VII (rFVIIa).[cite: 2]",
+                    rev_lmwh: "Protamine sulfate (neutralizes anti-Xa activity max 50%). If refractory: PCC.[cite: 2]",
+                    rev_ufh: "Protamine sulfate (slow IV: 1 mg per 100 IU of UFH administered over the last 2-3 hours).[cite: 2]",
+                    rev_none: "Specific antidotes are not indicated."
+                }
+            },
+
+            init() {
+                this.bindElements();
+                this.buildCalculators();
+                this.bindEvents();
+                this.updateDrugList();
+                this.updateUIOptions();
+                this.calculatePerioperative();
+                lucide.createIcons();
+            },
+
+            bindElements() {
+                const ids = [
+                    'selBlockade', 'selGroup', 'selDrug', 'selDose', 'selGfr', 
+                    'chkAggregation', 'chkTrauma', 'langToggle', 
+                    'txtReversal', 'visualTimeline', 'doacNote',
+                    'wrapDose', 'wrapGfr', 'wrapAggregation', 'wrapTrauma', 
+                    'lbl-ru', 'lbl-en', 'btnCaprini', 'btnPadua',
+                    'tab-perioperative', 'tab-vte', 'tab-bleeding', 'tab-chads',
+                    'capriniForm', 'paduaForm', 'hasbledForm', 'chadsForm',
+                    'vteScoreVal', 'vteResultBox', 'vteResultText',
+                    'hasbledScoreVal', 'hasbledResultBox', 'hasbledResultText',
+                    'chadsScoreVal', 'chadsResultBox', 'chadsResultText',
+                    'copyEmailBtn', 'emailText', 'emailIconWrap'
+                ];
+                ids.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) this.ui[id] = el;
+                });
+            },
+
+            buildCalculators() {
+                let capriniHTML = '';
+                this.calcData.caprini.forEach(group => {
+                    capriniHTML += `<div class="mb-1 mt-2"><span class="text-[10px] font-bold text-sky-600 bg-sky-100 px-2 py-0.5 rounded uppercase tracking-wider">${group.pts} Балл(а/ов)</span></div>`;
+                    group.items.forEach(item => capriniHTML += this.createCheckbox('caprini', item.id, item.ru, group.pts));
+                });
+                this.ui.capriniForm.innerHTML = capriniHTML;
+
+                let paduaHTML = '';
+                this.calcData.padua.forEach(item => paduaHTML += this.createCheckbox('padua', item.id, item.ru, item.pts, true));
+                this.ui.paduaForm.innerHTML = paduaHTML;
+
+                let hasbledHTML = '';
+                this.calcData.hasbled.forEach(item => hasbledHTML += this.createCheckbox('hasbled', item.id, item.ru, item.pts));
+                this.ui.hasbledForm.innerHTML = hasbledHTML;
+
+                let chadsHTML = '';
+                this.calcData.chads.forEach(item => chadsHTML += this.createCheckbox('chads', item.id, item.ru, item.pts, true));
+                this.ui.chadsForm.innerHTML = chadsHTML;
+            },
+
+            createCheckbox(type, id, label, pts, showPts = false) {
+                const ptsLabel = showPts ? `<span class="ml-auto text-xs font-bold text-indigo-400 bg-indigo-50 px-2 py-1 rounded-md shrink-0">+${pts}</span>` : '';
+                return `
+                <label class="checkbox-row flex items-center p-3 border border-sky-50 rounded-xl cursor-pointer">
+                    <input type="checkbox" class="calc-cb-${type} w-5 h-5 text-sky-600 bg-white border-sky-200 rounded focus:ring-sky-500 focus:ring-2" data-pts="${pts}" id="${id}">
+                    <span class="ml-3 text-sm font-medium text-blue-900" id="lbl_${id}">${label}</span>
+                    ${ptsLabel}
+                </label>`;
+            },
+
+            bindEvents() {
+                if(this.ui.langToggle) {
+                    this.ui.langToggle.addEventListener('change', (e) => {
+                        this.lang = e.target.checked ? 'en' : 'ru';
+                        this.updateLabels();
+                        this.updateDrugList();
+                        this.calculatePerioperative();
+                        this.updateCalculatorScores();
+                        this.ui['lbl-ru'].classList.toggle('text-blue-900/40', this.lang === 'en');
+                        this.ui['lbl-en'].classList.toggle('text-blue-900/40', this.lang === 'ru');
+                    });
+                }
+                
+                if(this.ui.btnCaprini && this.ui.btnPadua) {
+                    this.ui.btnCaprini.addEventListener('click', () => {
+                        this.state.vteMode = 'caprini';
+                        this.ui.btnCaprini.classList.replace('text-sky-600/70', 'text-sky-700');
+                        this.ui.btnCaprini.classList.add('bg-white', 'shadow-sm', 'font-semibold');
+                        this.ui.btnPadua.classList.remove('bg-white', 'shadow-sm', 'font-semibold');
+                        this.ui.btnPadua.classList.add('text-sky-600/70');
+                        this.ui.capriniForm.classList.remove('hidden');
+                        this.ui.capriniForm.classList.add('flex');
+                        this.ui.paduaForm.classList.add('hidden');
+                        this.ui.paduaForm.classList.remove('flex');
+                        this.updateCalculatorScores();
+                    });
+                    this.ui.btnPadua.addEventListener('click', () => {
+                        this.state.vteMode = 'padua';
+                        this.ui.btnPadua.classList.replace('text-sky-600/70', 'text-sky-700');
+                        this.ui.btnPadua.classList.add('bg-white', 'shadow-sm', 'font-semibold');
+                        this.ui.btnCaprini.classList.remove('bg-white', 'shadow-sm', 'font-semibold');
+                        this.ui.btnCaprini.classList.add('text-sky-600/70');
+                        this.ui.paduaForm.classList.remove('hidden');
+                        this.ui.paduaForm.classList.add('flex');
+                        this.ui.capriniForm.classList.add('hidden');
+                        this.ui.capriniForm.classList.remove('flex');
+                        this.updateCalculatorScores();
+                    });
+                }
+
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                        e.target.classList.add('active');
+                        this.state.activeTab = e.target.dataset.tab;
+                        ['perioperative', 'vte', 'bleeding', 'chads'].forEach(tab => {
+                            this.ui[`tab-${tab}`].classList.add('hidden');
+                        });
+                        this.ui[`tab-${this.state.activeTab}`].classList.remove('hidden');
+                    });
+                });
+
+                ['selBlockade', 'selGroup', 'selDrug', 'selDose', 'selGfr'].forEach(id => {
+                    if(this.ui[id]) {
+                        this.ui[id].addEventListener('change', (e) => {
+                            this.state[id.replace('sel', '').toLowerCase()] = e.target.value;
+                            if(id === 'selGroup') this.updateDrugList();
+                            this.updateUIOptions();
+                            this.calculatePerioperative();
+                        });
+                    }
+                });
+
+                if(this.ui.chkAggregation) {
+                    this.ui.chkAggregation.addEventListener('change', (e) => {
+                        this.state.aggregationNormal = e.target.checked;
+                        this.calculatePerioperative();
+                    });
+                }
+
+                if(this.ui.chkTrauma) {
+                    this.ui.chkTrauma.addEventListener('change', (e) => {
+                        this.state.traumaticTap = e.target.checked;
+                        this.calculatePerioperative();
+                    });
+                }
+
+                ['caprini', 'padua', 'hasbled', 'chads'].forEach(type => {
+                    document.querySelectorAll(`.calc-cb-${type}`).forEach(cb => {
+                        cb.addEventListener('change', () => {
+                            this.calculateScores(type);
+                        });
+                    });
+                });
+
+                if(this.ui.copyEmailBtn) {
+                    this.ui.copyEmailBtn.addEventListener('click', () => {
+                        navigator.clipboard.writeText('makariy.mendibaev@yandex.ru').then(() => {
+                            this.ui.emailText.textContent = this.i18n[this.lang].t_copied;
+                            this.ui.emailIconWrap.innerHTML = '<i data-lucide="check" class="w-4 h-4 text-emerald-600"></i>';
+                            lucide.createIcons();
+                            setTimeout(() => {
+                                this.ui.emailText.textContent = 'makariy.mendibaev@yandex.ru';
+                                this.ui.emailIconWrap.innerHTML = '<i data-lucide="mail" class="w-4 h-4"></i>';
+                                lucide.createIcons();
+                            }, 2000);
+                        });
+                    });
+                }
+            },
+
+            updateLabels() {
+                const dict = this.i18n[this.lang];
+                
+                Object.keys(dict).forEach(key => {
+                    if(key.startsWith('t_')) {
+                        const el = document.getElementById(key.replace('_', '-'));
+                        if(el) el.innerHTML = dict[key];
+                    }
+                });
+
+                this.calcData.caprini.forEach(group => group.items.forEach(item => {
+                    const el = document.getElementById(`lbl_${item.id}`);
+                    if(el) el.textContent = item[this.lang];
+                }));
+                ['padua', 'hasbled', 'chads'].forEach(scale => {
+                    this.calcData[scale].forEach(item => {
+                        const el = document.getElementById(`lbl_${item.id}`);
+                        if(el) el.textContent = item[this.lang];
+                    });
+                });
+            },
+
+            updateDrugList() {
+                if(!this.ui.selGroup || !this.ui.selDrug) return;
+                const group = this.ui.selGroup.value;
+                this.state.group = group;
+                const dict = this.i18n[this.lang];
+                
+                this.ui.selDrug.innerHTML = '';
+                this.drugs[group].forEach((drug, index) => {
+                    const opt = document.createElement('option');
+                    opt.value = drug;
+                    opt.textContent = dict[`d_${drug}`];
+                    this.ui.selDrug.appendChild(opt);
+                    if(index === 0) this.state.drug = drug; 
+                });
+            },
+
+            updateUIOptions() {
+                const { group, drug, blockade } = this.state;
+
+                // Visibility logic for GFR and DOSE
+                if (group === 'antiplatelet' || group === 'warfarin' || drug === 'ufh') {
+                    this.toggleVisibility('wrapDose', false);
+                    this.toggleVisibility('wrapGfr', false);
+                } else {
+                    this.toggleVisibility('wrapDose', true);
+                    this.toggleVisibility('wrapGfr', true);
+                }
+
+                // Show Traumatic Puncture for LMWH
+                if (drug === 'lmwh' && blockade === 'deep') {
+                    this.ui.wrapTrauma.classList.remove('hidden');
+                    this.ui.wrapTrauma.classList.add('flex');
+                } else {
+                    this.ui.wrapTrauma.classList.add('hidden');
+                    this.ui.wrapTrauma.classList.remove('flex');
+                    this.state.traumaticTap = false;
+                    if(this.ui.chkTrauma) this.ui.chkTrauma.checked = false;
+                }
+
+                // Show DOAC Clinical Notes
+                if (group === 'doac') {
+                    this.ui.doacNote.classList.remove('hidden');
+                } else {
+                    this.ui.doacNote.classList.add('hidden');
+                }
+
+                // Show Platelet Aggregation
+                if (group === 'antiplatelet' && blockade === 'deep' && drug !== 'aspirin') {
+                    this.ui.wrapAggregation.classList.remove('hidden');
+                    this.ui.wrapAggregation.classList.add('flex');
+                } else {
+                    this.ui.wrapAggregation.classList.add('hidden');
+                    this.ui.wrapAggregation.classList.remove('flex');
+                    this.state.aggregationNormal = false;
+                    if(this.ui.chkAggregation) this.ui.chkAggregation.checked = false;
+                }
+            },
+
+            toggleVisibility(id, show) {
+                const el = this.ui[id];
+                if (!el) return;
+                if (show) {
+                    el.classList.remove('hidden', 'opacity-0', 'h-0');
+                    el.classList.add('opacity-100');
+                } else {
+                    el.classList.add('hidden', 'opacity-0', 'h-0');
+                    el.classList.remove('opacity-100');
+                }
+            },
+
+            buildTimelineHTML(steps) {
+                let html = '';
+                steps.forEach((s) => {
+                    let dotColor = "bg-sky-500", textColor = "text-sky-600";
+                    let iconHTML = '';
+                    if(s.type === 'stop') { dotColor = "bg-rose-500"; textColor = "text-rose-600"; }
+                    else if(s.type === 'surgery') { dotColor = "bg-emerald-500"; textColor = "text-emerald-600"; iconHTML = `<div class="absolute -left-[14px] -top-1 w-7 h-7 rounded-full bg-emerald-100 flex items-center justify-center ring-4 ring-white"><i data-lucide="activity" class="w-4 h-4 text-emerald-600"></i></div>`; }
+                    else if(s.type === 'resume') { dotColor = "bg-indigo-500"; textColor = "text-indigo-600"; }
+                    else if(s.type === 'check') { dotColor = "bg-amber-500"; textColor = "text-amber-600"; }
+                    else if(s.type === 'warning') { dotColor = "bg-rose-600"; textColor = "text-rose-700"; }
+                    
+                    html += `
+                    <div class="relative pl-6 pb-2">
+                        ${iconHTML === '' ? `<div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full ${dotColor} ring-4 ring-white shadow-sm"></div>` : iconHTML}
+                        <p class="text-[11px] font-bold ${textColor} uppercase tracking-wider">${s.time}</p>
+                        <p class="text-sm font-semibold text-blue-950 mt-1 pb-1 leading-snug">${s.text}</p>
+                    </div>`;
+                });
+                return html;
+            },
+
+            calculatePerioperative() {
+                const { blockade, group, drug, dose, gfr, aggregationNormal, traumaticTap } = this.state;
+                const dict = this.i18n[this.lang];
+                const isEn = this.lang === 'en';
+
+                let revKey = "rev_none";
+                if (['rivaroxaban', 'apixaban'].includes(drug)) revKey = "rev_pcc_tran";
+                if (drug === 'dabigatran') revKey = "rev_dab";
+                if (drug === 'warfarin') revKey = "rev_warf";
+                if (['ticagrelor', 'clopidogrel', 'prasugrel'].includes(drug)) revKey = "rev_anti";
+                if (drug === 'lmwh' || drug === 'fondaparinux') revKey = "rev_lmwh";
+                if (drug === 'ufh') revKey = "rev_ufh";
+
+                let steps = [];
+
+                if (blockade === 'superficial') {
+                    steps.push({ type: 'surgery', time: isEn ? "Any time" : "Любое время", text: dict.tl_stop_proc });
+                    steps.push({ type: 'resume', time: isEn ? "Post-procedure" : "После вмешательства", text: dict.tl_resume_proc });
+                } 
+                else if (group === 'antiplatelet' && aggregationNormal && drug !== 'aspirin') {
+                    steps.push({ type: 'check', time: isEn ? "Pre-op" : "До операции", text: dict.tl_stop_aggr });
+                    steps.push({ type: 'surgery', time: "День 0", text: isEn ? "Puncture/Surgery" : "Пункция / Хирургия" });
+                }
+                else {
+                    switch(drug) {
+                        case 'rivaroxaban':
+                            if (gfr === 'severe') {
+                                steps.push({ type: 'warning', time: "Внимание", text: isEn ? "Strictly contraindicated (GFR < 30 ml/min)." : "Применение препарата при СКФ < 30 мл/мин противопоказано." });
+                            } else {
+                                let stopTime = "72";
+                                if(dose === 'low') {
+                                    if (gfr === 'moderate') stopTime = "30"; 
+                                    else stopTime = "24";
+                                }
+                                steps.push({ type: 'stop', time: isEn ? `-${stopTime} hours` : `-${stopTime} часов`, text: isEn ? "Discontinue drug" : "Отмена препарата" });
+                                steps.push({ type: 'surgery', time: "День 0", text: isEn ? "Puncture / Catheter Manipulation" : "Пункция / Удаление катетера" });
+                                steps.push({ type: 'resume', time: isEn ? "Post-op" : "После операции", text: dose === 'low' ? (isEn ? "Resume after 6 hours" : "Возобновление через 6 часов") : (isEn ? "Resume after 48 hours" : "Возобновление через 48 часов") });
+                            }
+                            break;
+                            
+                        case 'apixaban':
+                            if (gfr === 'severe') {
+                                steps.push({ type: 'warning', time: "Внимание", text: isEn ? "Strictly contraindicated (GFR < 30 ml/min)." : "Применение препарата при СКФ < 30 мл/мин противопоказано." });
+                            } else {
+                                let stopTime = "72";
+                                if(dose === 'low') stopTime = "36"; 
+                                steps.push({ type: 'stop', time: isEn ? `-${stopTime} hours` : `-${stopTime} часов`, text: isEn ? "Discontinue drug" : "Отмена препарата" });
+                                steps.push({ type: 'surgery', time: "День 0", text: isEn ? "Puncture / Catheter Manipulation" : "Пункция / Удаление катетера" });
+                                steps.push({ type: 'resume', time: isEn ? "Post-op" : "После операции", text: dose === 'low' ? (isEn ? "Resume after 6 hours" : "Возобновление через 6 часов") : (isEn ? "Resume after 48 hours" : "Возобновление через 48 часов") });
+                            }
+                            break;
+                            
+                        case 'dabigatran':
+                            if (gfr === 'severe') {
+                                steps.push({ type: 'warning', time: "Внимание", text: isEn ? "Strictly contraindicated (GFR < 30 ml/min)." : "Применение препарата при СКФ < 30 мл/мин противопоказано." });
+                            } else {
+                                let dStop = "48";
+                                if(dose === 'high') {
+                                    if(gfr === 'normal') dStop = "72";
+                                    else if(gfr === 'mild') dStop = "96 (4 суток)";
+                                    else dStop = "120 (5 суток)";
+                                }
+                                steps.push({ type: 'stop', time: isEn ? `-${dStop} hours` : `-${dStop} часов`, text: isEn ? "Discontinue drug" : "Отмена препарата" });
+                                steps.push({ type: 'surgery', time: "День 0", text: isEn ? "Puncture / Catheter Manipulation" : "Пункция / Удаление катетера" });
+                                steps.push({ type: 'resume', time: isEn ? "Post-op" : "После операции", text: dose === 'low' ? (isEn ? "Resume after 6 hours" : "Возобновление через 6 часов") : (isEn ? "Resume after 48 hours" : "Возобновление через 48 часов") });
+                            }
+                            break;
+                            
+                        case 'lmwh':
+                            let lStop = (dose === 'low') ? (gfr === 'severe' ? "24" : "12") : (gfr === 'severe' ? "48" : "24");
+                            let lResume = (isEn ? "≥ 4h after catheter removal" : "Не ранее чем через 4 ч после извлечения катетера");
+                            
+                            if (traumaticTap) {
+                                lResume = isEn ? "Delay initiation by 24h due to traumatic tap. Discuss with surgeon.[cite: 2]" : "Отложить старт НМГ на 24 часа ввиду травматичной пункции. Обсудить с хирургом.[cite: 2]";
+                            }
+
+                            steps.push({ type: 'stop', time: isEn ? `-${lStop} hours` : `-${lStop} часов`, text: isEn ? "Discontinue drug" : "Отмена препарата" });
+                            steps.push({ type: 'surgery', time: "День 0", text: isEn ? "Puncture / Catheter Manipulation" : "Пункция / Удаление катетера" });
+                            steps.push({ type: 'resume', time: isEn ? "Post-op" : "После операции", text: lResume });
+                            
+                            if (gfr === 'severe' && dose === 'low') {
+                                steps.push({ type: 'check', time: "Note", text: isEn ? "Consider dose reduction by 50%" : "Рассмотреть снижение дозы препарата вдвое" });
+                            }
+                            break;
+                            
+                        case 'fondaparinux':
+                            if (gfr === 'severe') {
+                                steps.push({ type: 'warning', time: "Внимание", text: isEn ? "Strictly contraindicated (GFR < 30 ml/min)." : "Применение препарата при СКФ < 30 мл/мин противопоказано." });
+                            } else if (dose === 'high') {
+                                steps.push({ type: 'warning', time: "Внимание", text: isEn ? "Strictly contraindicated for deep blocks" : "Выполнение глубоких блокад строго противопоказано." });
+                            } else {
+                                let fStop = (gfr === 'moderate') ? "72" : "36";
+                                steps.push({ type: 'stop', time: isEn ? `-${fStop} hours` : `-${fStop} часов`, text: isEn ? "Discontinue drug" : "Отмена препарата" });
+                                steps.push({ type: 'surgery', time: "День 0", text: isEn ? "Puncture / Catheter Manipulation" : "Пункция / Удаление катетера" });
+                                steps.push({ type: 'resume', time: isEn ? "+6 hours" : "+6 часов", text: isEn ? "Resume after catheter removal" : "Возобновление после удаления катетера" });
+                            }
+                            break;
+                            
+                        case 'ufh':
+                            steps.push({ type: 'stop', time: "-4...-6 часов", text: isEn ? "Stop IV infusion" : "Остановка внутривенной инфузии" });
+                            steps.push({ type: 'check', time: "До пункции", text: isEn ? "Verify aPTT ≤ 45s" : "Обязательный контроль АЧТВ ≤ 45 с" });
+                            steps.push({ type: 'surgery', time: "День 0", text: isEn ? "Puncture / Catheter Manipulation" : "Пункция / Удаление катетера" });
+                            steps.push({ type: 'resume', time: "≥ 1 час", text: isEn ? "Resume after puncture/removal" : "Возобновление после пункции/удаления" });
+                            break;
+                            
+                        case 'aspirin':
+                            steps.push({ type: 'check', time: "Дозировка", text: isEn ? "≤ 200 mg: continue. > 200 mg: stop -3 days" : "≤ 200 мг: продолжить. > 200 мг: отмена за 3 суток" });
+                            steps.push({ type: 'surgery', time: "День 0", text: isEn ? "Puncture / Catheter Manipulation" : "Пункция / Удаление катетера" });
+                            break;
+                            
+                        case 'ticagrelor':
+                            steps.push({ type: 'stop', time: "-5 дней", text: isEn ? "Discontinue drug" : "Отмена препарата" });
+                            steps.push({ type: 'surgery', time: "День 0", text: isEn ? "Puncture / Catheter Manipulation" : "Пункция / Удаление катетера" });
+                            steps.push({ type: 'resume', time: isEn ? "Post-op" : "После операции", text: isEn ? "Immediate after removal (or +6h if loading dose)" : "Немедленно после удаления (или +6ч при нагрузочной дозе)" });
+                            break;
+                            
+                        case 'clopidogrel':
+                            steps.push({ type: 'stop', time: "-5...-7 дней", text: isEn ? "Discontinue drug" : "Отмена препарата" });
+                            steps.push({ type: 'surgery', time: "День 0", text: isEn ? "Puncture / Catheter Manipulation" : "Пункция / Удаление катетера" });
+                            steps.push({ type: 'resume', time: isEn ? "Post-op" : "После операции", text: isEn ? "Immediate after removal (or +6h if loading dose)" : "Немедленно после удаления (или +6ч при нагрузочной дозе)" });
+                            break;
+                            
+                        case 'prasugrel':
+                            steps.push({ type: 'stop', time: "-7 дней", text: isEn ? "Discontinue drug" : "Отмена препарата" });
+                            steps.push({ type: 'surgery', time: "День 0", text: isEn ? "Puncture / Catheter Manipulation" : "Пункция / Удаление катетера" });
+                            steps.push({ type: 'resume', time: isEn ? "Post-op" : "После операции", text: isEn ? "Immediate after removal (or +6h if loading dose)" : "Немедленно после удаления (или +6ч при нагрузочной дозе)" });
+                            break;
+                            
+                        case 'warfarin':
+                            steps.push({ type: 'stop', time: "-5 дней", text: isEn ? "Stop Warfarin" : "Отмена варфарина" });
+                            steps.push({ type: 'check', time: "До пункции", text: isEn ? "Verify INR ≤ 1.5" : "Обязательный контроль МНО (≤ 1.5)" });
+                            steps.push({ type: 'surgery', time: "День 0", text: isEn ? "Puncture / Catheter Manipulation" : "Пункция / Удаление катетера" });
+                            steps.push({ type: 'resume', time: isEn ? "Post-op" : "После операции", text: isEn ? "Resume Warfarin" : "Возобновление варфарина" });
+                            break;
+                    }
+                }
+
+                this.ui.visualTimeline.innerHTML = this.buildTimelineHTML(steps);
+                lucide.createIcons();
+
+                this.ui.txtReversal.textContent = dict[revKey];
+            },
+
+            calculateScores(type) {
+                let score = 0;
+                document.querySelectorAll(`.calc-cb-${type}:checked`).forEach(cb => {
+                    score += parseInt(cb.dataset.pts);
+                });
+                this.state[`${type}Score`] = score;
+                this.updateCalculatorScores();
+            },
+
+            updateCalculatorScores() {
+                const isEn = this.lang === 'en';
+                
+                // HAS-BLED
+                const hScore = this.state.hasbledScore;
+                this.ui.hasbledScoreVal.textContent = hScore;
+                let hText = "";
+                let hColor = "text-rose-600";
+                if (hScore < 3) { 
+                    hText = isEn ? "Low/Moderate bleeding risk." : "Низкий/Умеренный риск кровотечений."; 
+                    hColor = "text-emerald-600"; 
+                } else { 
+                    hText = isEn ? "High bleeding risk (≥3). Requires caution and modifiable risk factor management." : "Высокий риск геморрагических осложнений (≥3). Требует повышенной осторожности и коррекции модифицируемых факторов риска."; 
+                }
+                this.ui.hasbledResultText.textContent = hText;
+                this.ui.hasbledResultText.className = `text-sm font-semibold leading-relaxed ${hColor}`;
+                this.ui.hasbledScoreVal.className = `text-5xl font-bold leading-none ${hColor}`;
+
+                // VTE
+                const vteMode = this.state.vteMode;
+                let vScore = 0;
+                let vText = "";
+                let vColor = "text-sky-600";
+                
+                if (vteMode === 'caprini') {
+                    vScore = this.state.capriniScore;
+                    if (vScore === 0) { vText = isEn ? "Very low risk. Early ambulation." : "Очень низкий risk ВТЭО. Показана ранняя активизация."; }
+                    else if (vScore <= 2) { vText = isEn ? "Low risk. Mechanical prophylaxis." : "Низкий риск ВТЭО. Показана механическая профилактика."; }
+                    else if (vScore <= 4) { vText = isEn ? "Moderate risk. Pharmacoprophylaxis (LMWH/UFH) recommended." : "Умеренный риск ВТЭО. Показана фармакопрофилактика (НМГ/НФГ)."; vColor = "text-indigo-600"; }
+                    else { vText = isEn ? "High risk. Pharmacoprophylaxis + Mechanical methods strongly recommended." : "Высокий риск ВТЭО. Показана обязательная сочетанная профилактика (Фармакопрофилактика + Аппаратная пневмокомпрессия)."; vColor = "text-rose-600"; }
+                } else {
+                    vScore = this.state.paduaScore;
+                    if (vScore < 4) { vText = isEn ? "Low risk of VTE. Mechanical prophylaxis." : "Низкий риск ВТЭО. Механическая профилактика."; }
+                    else { vText = isEn ? "High risk. Pharmacoprophylaxis indicated." : "Высокий риск ВТЭО. Показана обязательная фармакологическая тромбопрофилактика."; vColor = "text-rose-600"; }
+                }
+
+                this.ui.vteScoreVal.textContent = vScore;
+                this.ui.vteScoreVal.className = `text-5xl font-bold leading-none ${vColor}`;
+                this.ui.vteResultText.textContent = vText;
+                this.ui.vteResultText.className = `text-sm font-semibold leading-relaxed ${vColor}`;
+
+                // CHA2DS2-VASc
+                const chScore = this.state.chadsScore;
+                this.ui.chadsScoreVal.textContent = chScore;
+                let chText = "";
+                let chColor = "text-indigo-600";
+                if (chScore === 0) { chText = isEn ? "Low risk of thromboembolism." : "Низкий риск тромбоэмболических осложнений."; chColor = "text-emerald-600"; }
+                else if (chScore <= 4) { chText = isEn ? "Moderate risk. Bridge therapy not strictly required when stopping VKA." : "Умеренный риск. При отмене антагонистов витамина К проведение переходной (мост) терапии рутинно не требуется."; }
+                else { chText = isEn ? "High risk. Bridge therapy with therapeutic LMWH/UFH is required when stopping VKA." : "Высокий риск. При отмене антагонистов витамина К показано обязательное проведение переходной (мост) терапии лечебными дозами НМГ/НФГ."; chColor = "text-rose-600"; }
+                
+                this.ui.chadsResultText.textContent = chText;
+                this.ui.chadsResultText.className = `text-sm font-semibold leading-relaxed ${chColor}`;
+                this.ui.chadsScoreVal.className = `text-5xl font-bold leading-none ${chColor}`;
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            ExpertApp.init();
+        });
+    </script>
+</body>
+</html>
