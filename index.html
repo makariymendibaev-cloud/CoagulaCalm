@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CoagulaCalm / СППВР</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* Увеличение базового шрифта для лучшей читаемости */
@@ -165,7 +165,7 @@
                             <option value="normal" id="t-optGfrNormal">Нормальная (≥ 80)</option>
                             <option value="mild" id="t-optGfrMild">Сниженная (50 - 79)</option>
                             <option value="moderate" id="t-optGfrMod">Умеренно сниженная (30 - 49)</option>
-                            <option value="severe" id="t-optGfrSev">Тяжелая почечная дисфункция (< 30)</option>
+                            <option value="severe" id="t-optGfrSev">Тяжелая почечная дисфункция (&lt; 30)</option>
                         </select>
                     </div>
 
@@ -445,6 +445,7 @@
                             <option value="valve_bio">Биопротез / Недостаточность клапанов</option>
                             <option value="pad">Реконстр. хирургия аорты / артерий (ЗПА)</option>
                             <option value="proph">Профилактика тромбозов</option>
+                            <option value="rrt">Экстракорпоральная гемокоррекция</option>
                         </select>
                     </div>
 
@@ -478,7 +479,7 @@
 
                         <label class="checkbox-row flex items-center p-2.5 border border-rose-100/50 bg-rose-50/30 rounded-xl cursor-pointer">
                             <input type="checkbox" id="aiPlt" class="w-4 h-4 text-rose-600 bg-white border-rose-200 rounded focus:ring-rose-500 shrink-0">
-                            <span class="ml-2.5 text-[11px] sm:text-xs font-medium text-rose-900 leading-tight">Тромбоцитопения (< 50 тыс/мкл)</span>
+                            <span class="ml-2.5 text-[11px] sm:text-xs font-medium text-rose-900 leading-tight">Тромбоцитопения (&lt; 50 тыс/мкл)</span>
                         </label>
 
                         <label class="checkbox-row flex items-center p-2.5 border border-amber-100/50 bg-amber-50/30 rounded-xl cursor-pointer">
@@ -524,11 +525,11 @@
                                 </div>
                                 <div>
                                     <span class="text-[10px] text-emerald-700/70 font-bold uppercase block">Режим дозирования</span>
-                                    <p id="outDose" class="text-[11px] sm:text-xs font-semibold text-emerald-900"></p>
+                                    <p id="outDose" class="text-[11px] sm:text-xs font-semibold text-emerald-900 whitespace-pre-wrap"></p>
                                 </div>
                                 <div class="mt-1 pt-2 border-t border-emerald-200/60">
                                     <span class="text-[10px] text-emerald-700/70 font-bold uppercase block">Альтернатива (резерв)</span>
-                                    <p id="outAlt" class="text-[11px] sm:text-xs font-medium text-emerald-800/80"></p>
+                                    <p id="outAlt" class="text-[11px] sm:text-xs font-medium text-emerald-800/80 whitespace-pre-wrap"></p>
                                 </div>
                             </div>
                         </div>
@@ -538,7 +539,7 @@
                             <h3 class="text-xs sm:text-sm font-bold text-sky-800 uppercase tracking-wider mb-2 flex items-center gap-2">
                                 ⚖️ 3. Клиническое обоснование
                             </h3>
-                            <p id="outRationale" class="text-[11px] sm:text-xs font-medium text-sky-900 leading-relaxed"></p>
+                            <p id="outRationale" class="text-[11px] sm:text-xs font-medium text-sky-900 leading-relaxed whitespace-pre-wrap"></p>
                         </div>
 
                         <!-- 4. Мониторинг -->
@@ -546,7 +547,7 @@
                             <h3 class="text-xs sm:text-sm font-bold text-indigo-800 uppercase tracking-wider mb-2 flex items-center gap-2">
                                 🔬 4. План мониторинга
                             </h3>
-                            <p id="outMonitoring" class="text-[11px] sm:text-xs font-medium text-indigo-900 leading-relaxed"></p>
+                            <p id="outMonitoring" class="text-[11px] sm:text-xs font-medium text-indigo-900 leading-relaxed whitespace-pre-wrap"></p>
                         </div>
                     </div>
                 </section>
@@ -607,12 +608,12 @@
                         { id: 'c1_6', ru: 'Беременность или послеродовый период', en: 'Pregnancy or postpartum' },
                         { id: 'c1_7', ru: 'Невынашивание беременности в анамнезе', en: 'History of unexplained abortion' },
                         { id: 'c1_8', ru: 'Прием эстрогенов/гестагенов', en: 'Oral contraceptives or HRT' },
-                        { id: 'c1_9', ru: 'Сепсис (< 1 мес)', en: 'Sepsis (< 1 month)' },
-                        { id: 'c1_10', ru: 'Тяжелое заболевание легких/пневмония (< 1 мес)', en: 'Serious lung disease/pneumonia (< 1 month)' },
+                        { id: 'c1_9', ru: 'Сепсис (&lt; 1 мес)', en: 'Sepsis (&lt; 1 month)' },
+                        { id: 'c1_10', ru: 'Тяжелое заболевание легких/пневмония (&lt; 1 мес)', en: 'Serious lung disease/pneumonia (&lt; 1 month)' },
                         { id: 'c1_11', ru: 'Острый инфаркт миокарда', en: 'Acute myocardial infarction' },
-                        { id: 'c1_12', ru: 'Застойная сердечная недостаточность (< 1 мес)', en: 'Congestive heart failure (< 1 month)' },
+                        { id: 'c1_12', ru: 'Застойная сердечная недостаточность (&lt; 1 мес)', en: 'Congestive heart failure (&lt; 1 month)' },
                         { id: 'c1_13', ru: 'Воспалительное заболевание кишечника в анамнезе', en: 'History of inflammatory bowel disease' },
-                        { id: 'c1_14', ru: 'Терапевтический пациент на постельном режиме < 3 дней', en: 'Medical patient at bed rest < 3 days' }
+                        { id: 'c1_14', ru: 'Терапевтический пациент на постельном режиме &lt; 3 дней', en: 'Medical patient at bed rest &lt; 3 days' }
                     ]},
                     { pts: 2, items: [
                         { id: 'c2_1', ru: 'Возраст 61-74 года', en: 'Age 61-74 years' },
@@ -637,7 +638,7 @@
                         { id: 'c3_10', ru: 'Другие тромбофилии', en: 'Other congenital or acquired thrombophilia' }
                     ]},
                     { pts: 4, items: [
-                        { id: 'c4_1', ru: 'Инсульт (< 1 мес назад)', en: 'Stroke (< 1 month)' },
+                        { id: 'c4_1', ru: 'Инсульт (&lt; 1 мес назад)', en: 'Stroke (&lt; 1 month)' },
                         { id: 'c4_2', ru: 'Замена крупного сустава', en: 'Elective major lower extremity arthroplasty' },
                         { id: 'c4_3', ru: 'Перелом бедра, костей таза, голени', en: 'Hip, pelvis, or leg fracture' },
                         { id: 'c4_4', ru: 'Травма спинного мозга (< 1 мес)', en: 'Acute spinal cord injury (< 1 month)' }
@@ -708,7 +709,7 @@
                     t_optGfrNormal: "Нормальная (≥ 80)",
                     t_optGfrMild: "Сниженная (50 - 79)",
                     t_optGfrMod: "Умеренно сниженная (30 - 49)",
-                    t_optGfrSev: "Тяжелая почечная дисфункция (< 30)",
+                    t_optGfrSev: "Тяжелая почечная дисфункция (&lt; 30)",
                     
                     t_lblElderlyTitle: "Пожилой пациент",
                     t_lblElderlyDesc: "Соответствует термину elderly patient (≥ 75 лет)",
@@ -726,7 +727,7 @@
                     t_warnBridgeDesc: "Оценка по шкале CHA₂DS₂-VASc (≥ 5 баллов) указывает на высокий риск. При отмене варфарина требуется назначение лечебных доз НМГ/НФГ.",
                     
                     t_doacNoteTitle: "Клинические примечания (ПОАК)",
-                    t_doacNote1: "Остаточная концентрация ПОАК в плазме < 30 нг/мл или анти-Ха активность ≤ 0.1 МЕ/мл считается приемлемой для выполнения глубокой блокады.",
+                    t_doacNote1: "Остаточная концентрация ПОАК в плазме &lt; 30 нг/мл или анти-Ха активность ≤ 0.1 МЕ/мл считается приемлемой для выполнения глубокой блокады.",
                     t_doacNote2: "Использование специфических антидотов или КПК для обеспечения возможности выполнения блокады у рутинных пациентов строго не рекомендуется.",
                     t_tegWarnTxt: "Использование тромбоэластографии (ТЭГ) для оценки остаточного эффекта ПОАК недопустимо ввиду высокого риска получения ложнонормальных результатов.",
                     
@@ -775,7 +776,7 @@
                     tl_resume_proc: "Терапия продолжается в плановом режиме",
                     tl_stop_aggr: "При нормоагрегации тромбоцитов допустима более раняя пункция",
                     
-                    rev_pcc_tran: "Концентрат протромбинового комплекса (КПК) 50 МЕ/кг в комбинации с транексамовой кислотой 15 мг/кг. СЗП неэффективна.",
+                    rev_pcc_tran: "Концентрат протромбинового комплекса (КПК) 50 МЕ/кг в комбинации с транексамовой кислотой 15 мг/кг. При недоступности КПК — СЗП 15-20 мл/кг.",
                     rev_dab: "Специфический антидот — Идаруцизумаб 5 г в/в. Альтернатива: КПК 50 МЕ/кг + Транексамовая кислота.",
                     rev_warf: "Концентрат протромбинового комплекса (КПК) 30–50 МЕ/кг в комбинации с фитоменадионом (Витамин К1) в/в.",
                     rev_anti: "Трансфузия тромбоцитарного концентрата + Транексамовая кислота + рекомбинантный активированный фактор VII (rFVIIa).",
@@ -811,7 +812,7 @@
                     t_optGfrNormal: "Normal (≥ 80)",
                     t_optGfrMild: "Mild Impairment (50 - 79)",
                     t_optGfrMod: "Moderate Impairment (30 - 49)",
-                    t_optGfrSev: "Severe Dysfunction (< 30)",
+                    t_optGfrSev: "Severe Dysfunction (&lt; 30)",
                     
                     t_lblElderlyTitle: "Elderly Patient",
                     t_lblElderlyDesc: "Corresponds to the term elderly patient (≥ 75 years)",
@@ -829,7 +830,7 @@
                     t_warnBridgeDesc: "CHA₂DS₂-VASc score (≥ 5) indicates high risk. Bridging with therapeutic LMWH/UFH is mandatory upon VKA discontinuation.",
                     
                     t_doacNoteTitle: "Clinical Notes (DOAC)",
-                    t_doacNote1: "Residual DOAC plasma concentration < 30 ng/mL or anti-Xa activity ≤ 0.1 IU/mL is acceptable for neuraxial / deep blockade.",
+                    t_doacNote1: "Residual DOAC plasma concentration &lt; 30 ng/mL or anti-Xa activity ≤ 0.1 IU/mL is acceptable for neuraxial / deep blockade.",
                     t_doacNote2: "Using specific antidotes or PCC solely to enable neuraxial block in routine patients is strictly not recommended.",
                     t_tegWarnTxt: "Utilization of thromboelastography (TEG) to assess residual effects of DOACs is strictly prohibited due to false-normal results.",
                     
@@ -1249,7 +1250,7 @@
                 }
 
                 if (isPltLow) {
-                    alerts.push(isEn ? "🛑 Severe Thrombocytopenia (<50k): Extremely high spontaneous bleeding risk. Therapeutic DOAC/LMWH contraindicated." : "🛑 Тромбоцитопения (< 50 тыс/мкл): Терапевтическая АКТ рутинно противопоказана. Высочайший риск спонтанных кровоизлияний. Рассмотреть кава-фильтр при острой ВТЭО.");
+                    alerts.push(isEn ? "🛑 Severe Thrombocytopenia (&lt; 50k): Extremely high spontaneous bleeding risk. Therapeutic DOAC/LMWH contraindicated." : "🛑 Тромбоцитопения (&lt; 50 тыс/мкл): Терапевтическая АКТ рутинно противопоказана. Высочайший риск спонтанных кровоизлияний. Рассмотреть кава-фильтр при острой ВТЭО.");
                 }
                 
                 if (isInrHigh && indication !== 'valve_mech') {
@@ -1264,67 +1265,27 @@
                     alerts.push(isEn ? "⚠️ ACS Protocol: Routine full-dose DOACs are contraindicated. DAPT is the foundation." : "⚠️ Протокол ОКС: Использование полных лечебных доз ПОАК (напр., ривароксабан 20 мг) при изолированном инфаркте противопоказано. Основа — антиагреганты и парентеральная терапия в острую фазу.");
                 }
 
-                if (gfr > 0 && gfr < 15) {
-                    alerts.push(isEn ? "🛑 Severe CKD/AKI (CrCl < 15): All DOACs and standard LMWH are strictly contraindicated." : "🛑 Клиренс креатинина < 15 мл/мин: Согласно гайдлайнам ESC и КР РФ, ВСЕ ПОАК (апиксабан, ривароксабан, дабигатран) и лечебные дозы НМГ СТРОГО ПРОТИВОПОКАЗАНЫ. Фатальный риск кумуляции.");
-                } else if (gfr >= 15 && gfr < 30) {
-                    alerts.push(isEn ? "⚠️ CrCl 15-29: Dabigatran is absolutely contraindicated. Therapeutic DOACs (Apixaban/Rivaroxaban) are NOT contraindicated but require caution." : "⚠️ Клиренс креатинина 15-29 мл/мин: Дабигатран АБСОЛЮТНО ПРОТИВОПОКАЗАН. Лечебные дозы Ривароксабана и Апиксабана НЕ противопоказаны, но требуют крайней осторожности (и обязательной редукции дозы при ФП). Применение лечебных доз НМГ при такой СКФ несет риск кумуляции и требует анти-Ха контроля.");
-                } else if (gfr >= 30 && gfr <= 50) {
-                    alerts.push(isEn ? "⚠️ CrCl 30-50: Moderate renal impairment. Check dose reduction criteria." : "⚠️ Клиренс креатинина 30-50 мл/мин: Умеренное снижение функции почек. Требуется соблюдение критериев редукции дозы (особенно для ривароксабана при ФП).");
-                }
-
-                if (isCyp) {
-                    alerts.push(isEn ? "⚠️ CYP3A4/P-gp interaction: Risk of increased DOAC plasma concentration." : "⚠️ Лекарственное взаимодействие: ингибиторы CYP3A4/P-gp (амиодарон и др.) повышают AUC ПОАК.");
-                }
-
-                if (isNsaid) {
-                    alerts.push(isEn ? "⚠️ High GI bleed risk: Concurrent NSAID/Antiplatelet use multiplies bleeding risk." : "⚠️ Риск кровотечения: сочетанный прием с НПВС/антиагрегантами увеличивает геморрагический риск в 2-3 раза.");
-                }
-
-                if (weight > 120) {
-                    alerts.push(isEn ? "⚠️ Weight > 120kg: Standard DOAC dosing may be insufficient (ISTH criteria)." : "⚠️ Вес > 120 кг (ИМТ >40): Стандартная доза ПОАК может быть недостаточной (критерии ISTH).");
-                } else if (weight > 0 && weight < 60) {
-                    alerts.push(isEn ? "⚠️ Weight < 60kg: Increased bleeding risk, dose adjustment may be required." : "⚠️ Вес < 60 кг: Повышенный риск кумуляции, может потребоваться редукция дозы.");
-                }
-
-                if (alerts.length === 0) {
-                    alerts.push(isEn ? "✅ No critical pharmacokinetic conflicts identified." : "✅ Критических рисков и фармакокинетических конфликтов не выявлено.");
-                }
-
-                // 2 & 3. Стратегия и Обоснование
-                if (isPregnancy) {
-                    drug = isEn ? "LMWH (e.g., Enoxaparin/Dalteparin)" : "НМГ (Эноксапарин / Дальтепарин)";
-                    dose = isEn ? "Therapeutic or prophylactic dose adjusted by weight. DO NOT use DOACs/Warfarin." : "Лечебная или профилактическая доза по весу (напр., Эноксапарин 1 мг/кг 2 р/д). ПОАК и Варфарин строго противопоказаны!";
-                    alt = isEn ? "UFH (if close to delivery)" : "НФГ (непосредственно перед родами)";
-                    rationale = isEn ? "LMWH does not cross the placenta. It is the gold standard for anticoagulation during pregnancy." : "НМГ не проникают через плацентарный барьер и не выделяются с грудным молоком. Это золотой стандарт антикоагуляции при беременности. ПОАК и антагонисты витамина К обладают доказанной тератогенностью.";
-                    monitoring = isEn ? "Anti-Xa monitoring recommended due to shifting pharmacokinetics." : "Рекомендуется регулярный мониторинг пиковой анти-Ха активности из-за изменения объема распределения и СКФ у беременных.";
-                }
-                else if (isAps) {
-                    drug = isEn ? "Warfarin (with LMWH/UFH bridge)" : "Варфарин (с мост-терапией НМГ/НФГ)";
-                    dose = isEn ? "Titrate to target INR 2.0-3.0 (or 3.0-4.0 if recurrent). Bridge for ≥ 5 days and until INR target met for 2 consecutive days." : "Титрование дозы по МНО (цель 2.0-3.0, иногда 3.0-4.0). Обязательно перекрытие гепаринами (мост) минимум 5 суток И до достижения целевого МНО в течение 2 дней подряд.";
-                    alt = isEn ? "Long-term LMWH" : "Длительная терапия НМГ (при непереносимости варфарина)";
-                    rationale = isEn ? "DOACs are contraindicated in APS (TRAPS trial). VKA remains the standard of care." : "Основано на исследовании TRAPS: у пациентов с АФС (особенно тройным позитивным) ПОАК достоверно увеличивают частоту артериальных тромбозов по сравнению с варфарином. Варфарин — золотой стандарт.";
-                    monitoring = isEn ? "Frequent INR monitoring." : "Тщательный регулярный контроль МНО.";
-                }
-                else if (indication === 'vte_high_risk') {
-                    drug = isEn ? "Intravenous Unfractionated Heparin (UFH)" : "Внутривенный нефракционированный гепарин (НФГ)";
-                    dose = isEn ? "IV Bolus 80 IU/kg -> Infusion 18 IU/kg/h. Transition to SC LMWH/DOAC only after hemodynamic stability." : "Острая фаза: В/в болюс 80 ЕД/кг, далее непрерывная инфузия 18 ЕД/кг/ч. Переход на п/к НМГ или ПОАК — только после стойкой стабилизации.";
-                    alt = isEn ? "Systemic Thrombolysis (Alteplase) + UFH" : "Системный тромболизис (Алтеплаза) + НФГ";
-                    rationale = isEn ? "Shock/hypotension impairs subcutaneous absorption. UFH has rapid onset, short half-life, and is fully reversible with protamine, keeping options open for thrombolysis or embolectomy. Step-down to LMWH/DOAC is performed once vasopressors are stopped and microcirculation is restored." : "При шоке и централизации кровообращения всасывание п/к (НМГ) и пероральных (ПОАК) препаратов непредсказуемо. НФГ вводится в/в, имеет короткий Т1/2 и мгновенно нейтрализуется протамином (важно перед тромболизисом/эмболэктомией). ПРАВИЛО ПЕРЕХОДА (Step-down): после купирования шока, отмены вазопрессоров и восстановления микроциркуляции инфузию НФГ прекращают и сразу назначают лечебные дозы НМГ или ПОАК.";
-                    monitoring = isEn ? "aPTT every 6h (target 1.5-2.5x normal)." : "АЧТВ каждые 6 часов (цель 1.5-2.5 от базового значения).";
-                }
-                else if (indication === 'valve_mech') {
-                    drug = isEn ? "Warfarin (with LMWH/UFH bridge)" : "Варфарин (с мост-терапией НМГ/НФГ)";
-                    dose = isEn ? "Titrate to target INR. Bridge: Enoxaparin 1mg/kg BID for ≥ 5 days and until INR is therapeutic for 2 days." : "Титрование дозы варфарина по МНО. Мост: Эноксапарин 1 мг/кг 2 раза в день (или инфузия НФГ) минимум 5 суток И до достижения МНО в терапевтическом окне 2 дня подряд.";
-                    alt = isEn ? "None (LMWH monotherapy not recommended)" : "Нет. (Длительная монотерапия НМГ не рекомендуется)";
-                    rationale = isEn ? "Guidelines mandate VKA for mechanical valves. DOACs are contraindicated. LMWH long-term is suboptimal for valve thrombosis prevention and causes osteopenia." : "Согласно Клиническим Рекомендациям РФ, варфарин — единственный препарат для пациентов с механическими клапанами. Альтернатива в виде длительной монотерапии НМГ не рекомендована: риск развития остеопороза, развития ГИТ, инвазивность и худшая эффективность профилактики тромбоза клапана по сравнению с антагонистами витамина К.";
-                    monitoring = isEn ? "Frequent INR monitoring (target 2.5-3.5 or 2.0-3.0)." : "Регулярный контроль МНО (целевое 2.5-3.5 или 2.0-3.0 в зависимости от позиции протеза).";
-                }
-                else if (indication === 'valve_bio') {
-                    drug = isEn ? "DOACs (Rivaroxaban / Apixaban)" : "ПОАК (Ривароксабан, Апиксабан)";
-                    dose = isEn ? "Standard dosing (e.g. Apixaban 5mg BID) if AFib present." : "Стандартные дозы (напр., Апиксабан 5 мг 2 р/д) при сопутствующей фибрилляции предсердий.";
-                    alt = isEn ? "Warfarin or Aspirin (based on rhythm/time post-op)" : "Варфарин или АСК (в зависимости от ритма и сроков после операции)";
-                    rationale = isEn ? "Unlike mechanical valves, bioprostheses and valvular regurgitation are NOT contraindications for DOACs (RIVER, ENVISAGE-TAVI trials)." : "В отличие от механических клапанов, наличие биопротеза, пластики кольца или недостаточности клапанов не является противопоказанием к ПОАК (исследования RIVER, ENVISAGE-TAVI). Если у пациента есть ФП — ПОАК препараты выбора.";
-                    monitoring = isEn ? "Routine renal function check." : "Рутинный контроль функции почек для коррекции дозы ПОАК.";
+                if (indication === 'rrt') {
+                    alerts.push(isEn ? "⚠️ RRT: Ensure AT III > 70% before heparin. Divide patients by bleeding risk (standard vs high)." : "⚠️ Экстракорпоральная гемокоррекция: Обязателен контроль Антитромбина III перед гепаринотерапией. Выбор протокола зависит от деления пациентов на группы риска кровотечения (стандартный или высокий).");
+                    if (isBleedRisk || isPltLow) {
+                        drug = isEn ? "Regional Citrate Anticoagulation (RCA) or Heparin-Free" : "РЦА (1-й выбор) ИЛИ Безгепариновый протокол";
+                        dose = isEn ? "Target post-filter iCa 0.25-0.35 mmol/L" : "РЦА: Цитрат натрия (цель ионизированного Ca2+ постфильтр 0.25-0.35 ммоль/л).\nБезгепариновый: Предварительное промывание контура раствором гепарина (с последующим сбросом). Рассмотреть проведение прерывистого гемодиализа длительностью до 12 часов.";
+                        alt = isEn ? "None (systemic heparin contraindicated)" : "Системная гепаринизация строго противопоказана";
+                        rationale = isEn ? "KDIGO guidelines mandate RCA for patients with high bleeding risk. Systemic anticoagulation is life-threatening." : "Согласно рекомендациям KDIGO, при высоком риске кровотечения РЦА является безальтернативным методом. Работает строго внутри контура. При недоступности РЦА — безгепариновый протокол.";
+                        monitoring = isEn ? "iCa (systemic/circuit), Lactate. TEG R-time must remain at baseline." : "Строгий контроль Ионизированного кальция (в контуре 0.25-0.35 ммоль/л, у пациента 1.1-1.3 ммоль/л). Лактат (риск цитратной токсичности).\nТЭГ/РОТЭМ: время R (или CT INTEM) должно оставаться на базовом уровне.";
+                    } else {
+                        drug = isEn ? "RCA (Preferred) or UFH / LMWH" : "РЦА (Приоритет) ИЛИ НФГ / НМГ";
+                        dose = isEn 
+                            ? "UFH: Bolus 25-50 IU/kg (RRT) or up to 80 IU/kg (Hemoadsorption) -> 5-15 IU/kg/h.\nLMWH: 0.15 mg/kg bolus -> 0.05 mg/kg/h." 
+                            : "НФГ: Болюс 25–50 МЕ/кг (для ЗПТ) или до 80 МЕ/кг (для гемосорбции), далее непрерывная инфузия 5–15 МЕ/кг/ч.\nНМГ (Эноксапарин): Префильтровый болюс 0.15-0.25 мг/кг, далее непрерывная микроинфузия 0.05-0.1 мг/кг/ч.";
+                        alt = isEn ? "None" : "При ГИТ: Фондапаринукс (при СКФ >30) или Аргатробан.";
+                        rationale = isEn 
+                            ? "RCA is KDIGO 1st choice. Heparin requires AT III monitoring. Standard CRRT UFH protocol begins with 25-50 IU/kg bolus. For hemoadsorption, higher bolus up to 80 IU/kg is needed due to circuit adsorption." 
+                            : "РЦА — метод 1-го выбора (KDIGO). При системной гепаринизации эффективность критически зависит от уровня АТ III. Стандартный протокол старта ЗПТ включает болюс 25–50 МЕ/кг, однако при использовании высокосорбционных цитокиновых колонок (гемосорбция) из-за адсорбции требуется больший болюс — до 80 МЕ/кг.";
+                        monitoring = isEn 
+                            ? "AT III > 70%. aPTT/ACT: 1.5-2.0x. Anti-Xa target: 0.3-0.7 (UFH) or 0.25-0.35 (LMWH). TEG: R-time 1.5-2.0x normal." 
+                            : "1. АТ III: контроль перед стартом (цель > 70%).\n2. АЧТВ или АВС (ACT): целевое удлинение в 1.5-2.0 раза от базового для НФГ.\n3. Анти-Ха активность: цель 0.3-0.7 МЕ/мл (для НФГ) или 0.25-0.35 МЕ/мл (для инфузии НМГ).\n4. ТЭГ/РОТЭМ: целевое удлинение времени R (или CT INTEM) строго в 1.5–2.0 раза от базового.";
+                    }
                 }
                 else if (indication === 'pad') {
                     if (isBleedRisk) {
@@ -1379,7 +1340,7 @@
                         drug = isEn ? "Prophylactic LMWH or IVC Filter" : "Профилактические дозы НМГ или Кава-фильтр";
                         dose = isEn ? "Adjusted based on platalets" : "Эноксапарин 40 мг 1 раз в сутки (допустимо при тромбоцитах 25-50 тыс) под строгим контролем.";
                         alt = isEn ? "Unfractionated Heparin (UFH)" : "НФГ (под контролем АЧТВ)";
-                        rationale = isEn ? "Therapeutic anticoagulation with DOACs is unsafe with severe thrombocytopenia. Need manageable agent with short half-life." : "Терапевтическая антикоагуляция ПОАК при тромбоцитах <50 тыс. сопряжена с критическим риском фатальных кровотечений. Используются редуцированные дозы НМГ из-за их короткого периода полувыведения и управляемости. ПОАК противопоказаны из-за отсутствия точного лабораторного контроля в рутинной практике.";
+                        rationale = isEn ? "Therapeutic anticoagulation with DOACs is unsafe with severe thrombocytopenia. Need manageable agent with short half-life." : "Терапевтическая антикоагуляция ПОАК при тромбоцитах <50 тыс. сопряжена с критическим риском фатальных кровотечений. Используются редуцированные дозы НМГ из-за их короткого периода полувыведения и управляемости. ПОАК противопоказаны из-за отсутблюдательно лабораторного контроля в рутинной практике.";
                         monitoring = isEn ? "Daily platelets, Hb, clinical signs of bleeding." : "Ежедневный мониторинг тромбоцитов, уровня гемоглобина, клинический осмотр на наличие петехий/кровотечений.";
                     }
                 }
@@ -1553,8 +1514,6 @@
                         if(el) el.textContent = item[this.lang];
                     });
                 });
-                
-                this.generateAiPrompt();
             },
 
             updateDrugList() {
@@ -1621,7 +1580,7 @@
                     this.ui.wrapElderly.classList.add('flex');
                 }
 
-                // Травматичная пункция актуальна для ЛЮБОЙ глубокой (нейроаксиальной) блокады,
+                // Травматичная пункция актуальна для ЛЛЮБОЙ глубокой (нейроаксиальной) блокады,
                 // так как требует отсрочки возобновления терапии на 24 часа для всех антикоагулянтов.
                 if (blockade === 'deep') {
                     if(this.ui.wrapTrauma) {
@@ -1758,7 +1717,7 @@
                     switch(drug) {
                         case 'rivaroxaban':
                             if (gfr === 'severe') {
-                                steps.push({ type: 'warning', time: "Внимание", text: isEn ? "Strictly contraindicated (GFR < 30 ml/min)." : "Применение препарата при СКФ < 30 мл/мин противопоказано." });
+                                steps.push({ type: 'warning', time: "Внимание", text: isEn ? "Strictly contraindicated (GFR &lt; 30 ml/min)." : "Применение препарата при СКФ &lt; 30 мл/мин противопоказано." });
                             } else {
                                 let stopTime = "72";
                                 if(dose === 'low') {
@@ -1773,7 +1732,7 @@
                             
                         case 'apixaban':
                             if (gfr === 'severe') {
-                                steps.push({ type: 'warning', time: "Внимание", text: isEn ? "Strictly contraindicated (GFR < 30 ml/min)." : "Применение препарата при СКФ < 30 мл/мин противопоказано." });
+                                steps.push({ type: 'warning', time: "Внимание", text: isEn ? "Strictly contraindicated (GFR &lt; 30 ml/min)." : "Применение препарата при СКФ &lt; 30 мл/мин противопоказано." });
                             } else {
                                 let stopTime = "72";
                                 if(dose === 'low') stopTime = "36"; 
@@ -1785,7 +1744,7 @@
                             
                         case 'dabigatran':
                             if (gfr === 'severe') {
-                                steps.push({ type: 'warning', time: "Внимание", text: isEn ? "Strictly contraindicated (GFR < 30 ml/min)." : "Применение препарата при СКФ < 30 мл/мин противопоказано." });
+                                steps.push({ type: 'warning', time: "Внимание", text: isEn ? "Strictly contraindicated (GFR &lt; 30 ml/min)." : "Применение препарата при СКФ &lt; 30 мл/мин противопоказано." });
                             } else {
                                 let dStop = "48";
                                 if(dose === 'high' || dose === 'intermediate') {
@@ -1828,7 +1787,7 @@
                             
                         case 'fondaparinux':
                             if (gfr === 'severe') {
-                                steps.push({ type: 'warning', time: "Внимание", text: isEn ? "Strictly contraindicated (GFR < 30 ml/min)." : "Применение препарата при СКФ < 30 мл/мин противопоказано." });
+                                steps.push({ type: 'warning', time: "Внимание", text: isEn ? "Strictly contraindicated (GFR &lt; 30 ml/min)." : "Применение препарата при СКФ &lt; 30 мл/мин противопоказано." });
                             } else {
                                 let fStop = "36";
                                 if (dose === 'high' || dose === 'intermediate') {
